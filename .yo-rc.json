@@ -1,0 +1,10 @@
+{
+  "generator-jhipster-blueprint": {
+    "promptValues": {
+      "githubName": "robwalls3",
+      "authorName": "Rob Walls",
+      "authorEmail": "rob.w3@pm.me",
+      "authorUrl": "www.detachedbrand.com"
+    }
+  }
+}

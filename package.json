@@ -1,0 +1,60 @@
+{
+  "name": "generator-jhipster-angular-flex",
+  "version": "0.0.0",
+  "description": "This module extends the angular client side to provide flex layouts for every entity with generated material cards and list views for every entity. This module imports @angular/material to the vendor.scss file and modifies app.module.ts to include an angular material module.",
+  "keywords": [
+    "yeoman-generator",
+    "jhipster-blueprint",
+    "jhipster-5"
+  ],
+  "homepage": "https://github.com/robwalls3/generator-jhipster-angular-flex",
+  "author": {
+    "name": "Rob Walls",
+    "email": "rob.w3@pm.me",
+    "url": "www.detachedbrand.com"
+  },
+  "files": [
+    "generators"
+  ],
+  "main": "generators/app/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robwalls3/generator-jhipster-angular-flex.git"
+  },
+  "dependencies": {
+    "chalk": "2.4.1",
+    "generator-jhipster": "6.10.4"
+  },
+  "devDependencies": {
+    "chai": "4.1.2",
+    "ejs-lint": "0.3.0",
+    "eslint": "5.0.0",
+    "eslint-config-airbnb-base": "13.0.0",
+    "eslint-config-prettier": "3.1.0",
+    "eslint-plugin-import": "2.12.0",
+    "eslint-plugin-prettier": "3.0.0",
+    "fs-extra": "6.0.1",
+    "jsdoc": "3.5.5",
+    "mocha": "5.2.0",
+    "prettier": "1.14.3",
+    "sinon": "6.0.0",
+    "yeoman-assert": "3.1.1",
+    "yeoman-test": "1.7.2"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint-fix": "npm run lint -- --fix",
+    "pretest": "npm run lint",
+    "test": "npm run test:unit -- test/*.spec.js",
+    "test:unit": "mocha --timeout 20000 --slow 0 --reporter spec",
+    "jsdoc": "jsdoc --configure jsdoc-conf.json",
+    "release": "git push && git push --tags && npm publish",
+    "release:patch": "npm version patch -a -m \"Update to %s\" && npm run release",
+    "release:minor": "npm version minor -a -m \"Update to %s\" && npm run release",
+    "release:major": "npm version major -a -m \"Update to %s\" && npm run release"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/robwalls3/generator-jhipster-angular-flex/issues"
+  }
+}
