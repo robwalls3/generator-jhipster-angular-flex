@@ -111,9 +111,7 @@ module.exports = class extends ClientGenerator {
                 this.addNpmDependency('material-icons', 'latest');
 
                 this.angularAppName = this.getAngularAppName();
-                this.addAngularModule('', 'Material', 'material', 'material', false, this.ANGULAR);
-                this.addAngularModule('', 'FlexLayout', 'material', 'material', false, this.ANGULAR);
-            }
+                this.addAngularModule('', 'Material', 'material', 'material', false, this.ANGULAR);            }
         };
         return Object.assign(phaseFromJHipster, customPhaseSteps);
     }

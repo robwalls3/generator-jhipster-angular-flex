@@ -80,17 +80,16 @@ const materialModules = [
   MatRadioModule,
   MatDatepickerModule,
   MatTooltipModule,
+  FlexLayoutModule
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    ...materialModules,
-    FlexLayoutModule
+    ...materialModules
   ],
   exports: [
     ...materialModules,
-    FlexLayoutModule
   ],
 })
 export class MaterialModule { }
