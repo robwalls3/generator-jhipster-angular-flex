@@ -57,6 +57,7 @@ module.exports = class extends ClientGenerator {
          * ```
          */
         // Here we are not overriding this phase and hence its being handled by JHipster
+
         return super._initializing();
     }
 
@@ -96,6 +97,18 @@ module.exports = class extends ClientGenerator {
         const customPhaseSteps = {
             writeAdditionalFile() {
                 writeFiles.call(this);
+            },
+
+            addMaterialDependencies() {
+                this.log('\n');
+                this.log(`${chalk.yellow('     GENERATOR-ANGULAR-FLEX      ')}`);
+                this.log(`${chalk.yellow('  ADDING MATERIAL DEPENDENCIES   ')}`);
+                this.log('\n');
+                this.addNpmDependency('@angular/animations', 'latest');
+                this.addNpmDependency('@angular/material', 'latest');
+                this.addNpmDependency('@angular/cdk', 'latest');
+                this.addNpmDependency('@angular/flex-layout', 'latest');
+                this.addNpmDependency('material-icons', 'latest');
             }
         };
         return Object.assign(phaseFromJHipster, customPhaseSteps);
