@@ -112,6 +112,7 @@ module.exports = class extends ClientGenerator {
 
                 this.angularAppName = this.getAngularAppName();
                 this.addAngularModule(this.angularAppName, 'MaterialModule', 'material', 'material.module', false, this.ANGULAR);
+                this.addAngularModule(this.angularAppName, 'FlexLayoutModule', '@angular', 'flex-layout', false, this.ANGULAR);
             }
         };
         return Object.assign(phaseFromJHipster, customPhaseSteps);
