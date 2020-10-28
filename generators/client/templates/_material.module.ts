@@ -40,6 +40,7 @@ import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const materialModules = [
   CdkTreeModule,
@@ -78,16 +79,18 @@ const materialModules = [
   MatGridListModule,
   MatRadioModule,
   MatDatepickerModule,
-  MatTooltipModule
+  MatTooltipModule,
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    ...materialModules
+    ...materialModules,
+    FlexLayoutModule
   ],
   exports: [
-    ...materialModules
+    ...materialModules,
+    FlexLayoutModule
   ],
 })
 export class MaterialModule { }
