@@ -7,7 +7,7 @@
             <button mat-raised-button color="primary" id="jh-create-entity"
                 data-cy="entityCreateButton" class="jh-create-entity create-<%= entityUrl %>"
                 [routerLink]="['/<%= entityUrl %>/new']">
-                <mat-icon>plus</mat-icon>
+                <mat-icon>add</mat-icon>
                 <span <% if (searchEngine !== false) { %>class="hidden-sm-down" <% } %> jhiTranslate="<%= i18nKeyPrefix %>.home.createLabel">
                 Create a new <%= entityClassHumanized %>
                 </span>
@@ -174,8 +174,8 @@
                                 <%_ } _%>
                             </div>
                             <%_ } _%>
-                        <%_ } _%>
                         </li>
+                        <%_ } _%>
                     </ul>
                 </mat-card-content>
                 <mat-card-actions>
@@ -183,7 +183,7 @@
                         <mat-icon>pageview</mat-icon>
                         <span>View</span>
                     </button>
-                    <button mat-button [routerLink]="['/<% entityUrl %>', <%= entityInstance %>.id,'edit']">
+                    <button mat-button [routerLink]="['/<%= entityUrl %>', <%= entityInstance %>.id,'edit']">
                         <mat-icon>edit</mat-icon>
                         <span>Edit</span>
                     </button>
