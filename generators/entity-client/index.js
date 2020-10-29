@@ -42,7 +42,7 @@ module.exports = class extends EntityClientGenerator {
     get writing() {
         // Here we are not overriding this phase and hence its being handled by JHipster
         const customPostPhaseSteps = {
-            writeFiles() {
+            myCustomPostInitStep() {
                 // Overwrite:
                 this.log('\n');
                 this.log(`Writing from ${this.CLIENT_TEST_SRC_DIR} and ${this.CLIENT_MAIN_SRC_DIR}`);
