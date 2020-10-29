@@ -21,13 +21,7 @@ module.exports = class extends EntityClientGenerator {
     get initializing() {
         // Here we are not overriding this phase and hence its being handled by JHipster
 
-        const phaseFromJHipster = super._initializing();
-        const myCustomPhaseSteps = {
-            myFirstStep() {
-                // do nothing of course.
-            }
-        };
-        return Object.assign(phaseFromJHipster, myCustomPhaseSteps);
+        return super._initializing();
     }
 
     get prompting() {
