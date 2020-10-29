@@ -136,6 +136,7 @@
                             const otherEntityStateName = relationships[idx].otherEntityStateName;
                             const otherEntityField = relationships[idx].otherEntityField;
                             const otherEntityFieldCapitalized = relationships[idx].otherEntityFieldCapitalized;
+                            let someEntityExists = false;
                         _%>
                         <li>
                             <mat-icon>link</mat-icon>
@@ -176,10 +177,14 @@
                             </div>
                             <%_ } else { _%>
                             <div>
-                                One to Many:
-                                <a routerLink="/<%= otherEntityName %>">
-                                    <%= otherEntityName %>
-                                </a>
+                                <span *ngFor="let <%= otherEntityName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>">
+                                    <a [routerLink]="['/<%= otherEntityName %>', <%= otherEntityName %>.id, 'view']">
+                                        {{ <%= otherEntityName %>.<%= otherEntityField %> }}
+                                    </a>
+                                </span>
+                                <span *ngIf="<%= entityInstance %>.<%= relationshipFieldNamePlural %>.isEmpty()">
+                                    No <%= relationshipFieldNamePlural %>
+                                </span>
                             </div>
                             <%_ } _%>
                         </li>
