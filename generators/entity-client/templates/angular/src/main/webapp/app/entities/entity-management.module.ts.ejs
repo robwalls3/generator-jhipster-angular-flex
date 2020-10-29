@@ -63,4 +63,4 @@ import { MatCardModule } from '@angular/material/card';
     ]
     <%_ } _%>
 })
-export class <%= locals.microserviceName ? upperFirstCamelCase(locals.microserviceName) : '' %><%= entityAngularName %>Module {}
+export class <%= angularAppName %><%= locals.microserviceName ? upperFirstCamelCase(locals.microserviceName) : '' %><%= entityAngularName %>Module {}

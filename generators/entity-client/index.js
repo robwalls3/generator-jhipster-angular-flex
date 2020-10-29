@@ -88,7 +88,9 @@ module.exports = class extends EntityClientGenerator {
                 this.log(`Writing from ${this.CLIENT_TEST_SRC_DIR} and ${this.CLIENT_MAIN_SRC_DIR}`);
                 this.log(`Creating cards and layouts for ${this.entityName}...`);
 
-                this.writeFilesToDisk(mainFiles(this.CLIENT_MAIN_SRC_DIR), this, false, mainTemplates);
+                this.angularAppName = this.getAngularAppName();
+
+                this.writeFilesToDisk(mainFiles(`${this.CLIENT_MAIN_SRC_DIR}/app/`), this, false, mainTemplates);
                 this.writeFilesToDisk(testFiles(this.CLIENT_TEST_SRC_DIR), this, false, testTemplates);
             }
         };
