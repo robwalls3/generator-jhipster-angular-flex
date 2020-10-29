@@ -176,7 +176,10 @@
                             </div>
                             <%_ } else { _%>
                             <div>
-                                One to Many: <%= relationshipNameHumanized %>
+                                One to Many:
+                                <a routerLink="/<%= otherEntityName %>">
+                                    <%= relationshipNameHumanized %>
+                                </a>
                             </div>
                             <%_ } _%>
                         </li>
