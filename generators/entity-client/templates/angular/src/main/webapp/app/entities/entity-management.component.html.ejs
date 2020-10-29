@@ -3,16 +3,11 @@
         <span id="page-header" jhiTranslate="<%= i18nKeyPrefix %>.home.title"><%= entityClassPluralHumanized %></span>
 
         <div class="d-flex justify-content-end">
-            <button class="btn btn-info mr-2" (click)="handleSyncList()" [disabled]="isLoading">
-                <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-                <span jhiTranslate="<%= i18nKeyPrefix %>.home.refreshListLabel">Refresh List</span>
-            </button>
             <%_ if (!readOnly) { _%>
-
             <button mat-raised-button color="primary" id="jh-create-entity"
                 data-cy="entityCreateButton" class="jh-create-entity create-<%= entityUrl %>"
                 [routerLink]="['/<%= entityUrl %>/new']">
-                <mat-icon>plus</fa-icon>
+                <mat-icon>plus</mat-icon>
                 <span <% if (searchEngine !== false) { %>class="hidden-sm-down" <% } %> jhiTranslate="<%= i18nKeyPrefix %>.home.createLabel">
                 Create a new <%= entityClassHumanized %>
                 </span>
@@ -29,7 +24,7 @@
                 <mat-icon>view_comfy</mat-icon>
             </button>
         </div>
-    </h2>
+    </mat-toolbar>
 
     <<%= jhiPrefixDashed %>-alert-error></<%= jhiPrefixDashed %>-alert-error>
 
@@ -60,8 +55,9 @@
     </div>
 
     <div fxLayout="row wrap" fxLayoutGap="10px grid"
-        fxLayoutAlign="center space-between">
-        <div fxFlex="25%" fxFlex.md="25%" fxFlex.sm="50%" fxFlex.xs="100%" *ngFor="let person of people; trackBy: trackId">
+        fxLayoutAlign="center space-between"
+        *ngIf="<%= entityInstancePlural %> && <%= entityInstancePlural %>.length > 0 && viewType == 'grid'">
+        <div fxFlex="25%" fxFlex.md="25%" fxFlex.sm="50%" fxFlex.xs="100%" *ngFor="let <%= entityInstance %> of <%= entityInstancePlural %>; trackBy: trackId">
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>
@@ -180,7 +176,7 @@
     </div>
 
 
-    <div class="table-responsive" id="entities" *ngIf="<%= entityInstancePlural %> && <%= entityInstancePlural %>.length > 0">
+    <div class="table-responsive" id="entities" *ngIf="<%= entityInstancePlural %> && <%= entityInstancePlural %>.length > 0 && viewType == 'list'">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr<% if (pagination !== 'no') { %> jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="<%= pagination !== 'infinite-scroll' ? 'loadPage.bind(this)' : 'reset.bind(this)'%>"<% } %>>
