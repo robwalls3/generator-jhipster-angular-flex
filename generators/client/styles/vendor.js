@@ -1,14 +1,11 @@
-const theme = {
-    style: "@import '~@angular/material/prebuilt-themes/indigo-pink.css'",
-    comment: 'Material Theme!'
-};
-
-const icons = {
-    style: "@import '~material-icons/iconfont/material-icons.css'",
-    comment: 'Material Icons!'
+const material = {
+    style: `
+    @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+    @import '~material-icons/iconfont/material-icons.css';
+    `,
+    comment: 'Material Theme and icons!'
 };
 
 module.exports = {
-    theme,
-    icons
+    material
 };

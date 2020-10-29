@@ -4,8 +4,8 @@ const EntityClientGenerator = require('generator-jhipster/generators/entity-clie
 const mainFiles = require('./files').getMainFiles;
 const testFiles = require('./files').getTestFiles;
 
-const mainTemplates = '../templates/angular/src/main/webapp/app';
-const testTemplates = '../templates/angular';
+const mainTemplates = 'angular';
+const testTemplates = 'angular';
 
 module.exports = class extends EntityClientGenerator {
     constructor(args, opts) {
@@ -81,19 +81,22 @@ module.exports = class extends EntityClientGenerator {
 
     get writing() {
         // Here we are not overriding this phase and hence its being handled by JHipster
-        const phaseFromJHipster = super._writing();
-        const myCustomPhaseSteps = {
+        const customPostPhaseSteps = {
             overwriteComponent() {
                 // Overwrite:
                 this.log('\n');
-                this.log(`Writing from ${this.CLIENT_TEST_SRC_DIR} and ${this.ANGULAR_DIR}`);
+                this.log(`Writing from ${this.CLIENT_TEST_SRC_DIR} and ${this.CLIENT_MAIN_SRC_DIR}`);
+                this.log(`Creating cards and layouts for ${this.entityName}...`);
 
-                this.writeFilesToDisk(mainFiles(this.ANGULAR_DIR), this, false, mainTemplates);
+                this.writeFilesToDisk(mainFiles(this.CLIENT_MAIN_SRC_DIR), this, false, mainTemplates);
                 this.writeFilesToDisk(testFiles(this.CLIENT_TEST_SRC_DIR), this, false, testTemplates);
             }
         };
 
-        return Object.assign(phaseFromJHipster, myCustomPhaseSteps);
+        return {
+            ...super._writing(),
+            ...customPostPhaseSteps
+        };
     }
 
     get install() {
