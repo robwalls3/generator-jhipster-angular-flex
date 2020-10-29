@@ -136,6 +136,7 @@
                             const otherEntityStateName = relationships[idx].otherEntityStateName;
                             const otherEntityField = relationships[idx].otherEntityField;
                             const otherEntityFieldCapitalized = relationships[idx].otherEntityFieldCapitalized;
+                            const otherEntityRelationshipName = relationships[idx].otherEntityRelationshipName;
                             let someEntityExists = false;
                         _%>
                         <li>
@@ -179,10 +180,15 @@
                             <div>
                                 <span *ngFor="let <%= otherEntityName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>">
                                     <a [routerLink]="['/<%= otherEntityName %>', <%= otherEntityName %>.id, 'view']">
-                                        {{ <%= otherEntityName %>.<%= otherEntityField %> }}
+                                        <small>
+                                            RelationshipFieldName: <%= relationshipFieldName %>
+                                            OtherEntityRelationshipName: <%= otherEntityRelationshipName %>
+                                            otherEntityFieldCapitalized: <%= otherEntityFieldCapitalized %>
+
+                                        </small>
                                     </a>
                                 </span>
-                                <span *ngIf="<%= entityInstance %>.<%= relationshipFieldNamePlural %>.isEmpty()">
+                                <span *ngIf="<%= entityInstance %>.<%= relationshipFieldNamePlural %>.length <= 0">
                                     No <%= relationshipFieldNamePlural %>
                                 </span>
                             </div>
