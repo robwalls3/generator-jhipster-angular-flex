@@ -12,8 +12,6 @@ module.exports = class extends EntityClientGenerator {
     constructor(args, opts) {
         super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
 
-        this.frontendAppName = this.getFrontendAppName();
-
         if (!this.jhipsterContext) {
             this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint angular-flex')}`);
         }
