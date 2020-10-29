@@ -181,14 +181,11 @@
                                 <span *ngFor="let <%= otherEntityName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>">
                                     <a [routerLink]="['/<%= otherEntityName %>', <%= otherEntityName %>.id, 'view']">
                                         <small>
-                                            RelationshipFieldName: <%= relationshipFieldName %>
-                                            OtherEntityRelationshipName: <%= otherEntityRelationshipName %>
-                                            otherEntityFieldCapitalized: <%= otherEntityFieldCapitalized %>
-
+                                            {{ <%= otherEntityName %> }}.id
                                         </small>
                                     </a>
                                 </span>
-                                <span *ngIf="<%= entityInstance %>.<%= relationshipFieldNamePlural %>.length <= 0">
+                                <span *ngIf="!<%= entityInstance %>.<%= relationshipFieldNamePlural %>?.length">
                                     No <%= relationshipFieldNamePlural %>
                                 </span>
                             </div>
