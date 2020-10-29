@@ -61,12 +61,17 @@
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>
+                        <%_ let nameAdded = false _%>
                         <%_ for (idx in fields) {
                             const fieldName = fields[idx].fieldName;
                             if (fieldName === 'name' || fieldName === 'title') {
+                                nameAdded = true
                         _%>
                                 {{ <%= entityInstance %>.<%= fieldName %> }}
                             <%_ } _%>
+                        <%_ } _%>
+                        <%_ if (nameAdded === false) { _%>
+                            <%= entityClassHumanized %>
                         <%_ } _%>
                     </mat-card-title>
                     <mat-card-subtitle>
@@ -170,6 +175,7 @@
                             </div>
                             <%_ } _%>
                         <%_ } _%>
+                        </li>
                     </ul>
                 </mat-card-content>
                 <mat-card-actions>
