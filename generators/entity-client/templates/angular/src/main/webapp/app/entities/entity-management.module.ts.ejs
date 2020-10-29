@@ -19,7 +19,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SharedModule } from 'app/shared/shared.module';
+import { <%= frontendAppName %>SharedModule } from 'app/shared/shared.module';
 import { <%= entityAngularName %>Component } from './<%= entityFileName %>.component';
 import { <%= entityAngularName %>DetailComponent } from './<%= entityFileName %>-detail.component';
 <%_ if (!readOnly) { _%>
@@ -34,7 +34,7 @@ import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
     imports: [
-        SharedModule,
+        <%= frontendAppName %>SharedModule,
         RouterModule,
         MatToolbarModule,
         MatCardModule,
