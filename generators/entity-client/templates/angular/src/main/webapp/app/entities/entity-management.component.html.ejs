@@ -181,7 +181,7 @@
                                 <span *ngFor="let <%= otherEntityName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>">
                                     <a [routerLink]="['/<%= otherEntityName %>', <%= otherEntityName %>.id, 'view']">
                                         <small>
-                                            {{ <%= otherEntityName %> }}.id
+                                            {{ <%= otherEntityName %>.id }}
                                         </small>
                                     </a>
                                 </span>
