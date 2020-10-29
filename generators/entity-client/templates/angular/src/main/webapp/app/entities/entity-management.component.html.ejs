@@ -139,12 +139,13 @@
                             const otherEntityRelationshipName = relationships[idx].otherEntityRelationshipName;
                             let someEntityExists = false;
                         _%>
-                        <li>
-                            <mat-icon>link</mat-icon>
+
                             <%_ if (relationshipType === 'many-to-one'
                                     || (relationshipType === 'one-to-one' && ownerSide === true)
                                     || (relationshipType === 'many-to-many' && ownerSide === true && pagination === 'no')) {
                             _%>
+                        <li>
+                            <mat-icon>link</mat-icon>
                             <div>
                                 <%_ if (otherEntityName === 'user') { _%>
                                     <%_ if (relationshipType === 'many-to-many') { _%>
@@ -176,7 +177,10 @@
                                     <%_ } _%>
                                 <%_ } _%>
                             </div>
-                            <%_ } else { _%>
+                        </li>
+                            <%_ } else if (ownerSide === true) { _%>
+                        <li>
+                            <mat-icon>link</mat-icon>
                             <div>
                                 <span *ngFor="let <%= otherEntityName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>">
                                     <a [routerLink]="['/<%= otherEntityName %>', <%= otherEntityName %>.id, 'view']">
@@ -189,8 +193,8 @@
                                     No <%= relationshipFieldNamePlural %>
                                 </span>
                             </div>
-                            <%_ } _%>
                         </li>
+                            <%_ } _%>
                         <%_ } _%>
                     </ul>
                 </mat-card-content>
