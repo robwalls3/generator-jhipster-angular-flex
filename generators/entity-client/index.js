@@ -1,6 +1,9 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const EntityClientGenerator = require('generator-jhipster/generators/entity-client');
+const angularFiles = require('./files').angularFiles;
+
+const CLIENT_NG2_TEMPLATES_DIR = 'angular';
 
 module.exports = class extends EntityClientGenerator {
     constructor(args, opts) {
@@ -69,7 +72,16 @@ module.exports = class extends EntityClientGenerator {
 
     get writing() {
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._writing();
+        const phaseFromJHipster = super._writing();
+        const myCustomPhaseSteps = {
+            overwriteComponent() {
+                // Overwrite:
+                const templatesDir = CLIENT_NG2_TEMPLATES_DIR;
+                this.writeFilesToDisk(angularFiles, templatesDir);
+            }
+        };
+
+        return Object.assign(phaseFromJHipster, myCustomPhaseSteps);
     }
 
     get install() {

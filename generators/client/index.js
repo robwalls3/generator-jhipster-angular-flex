@@ -2,6 +2,11 @@
 const chalk = require('chalk');
 const ClientGenerator = require('generator-jhipster/generators/client');
 const writeFiles = require('./files').writeFiles;
+const pageHeaderStyle = require('./styles/entity-page').pageHeader;
+const matToolbarStyle = require('./styles/entity-page').matToolbar;
+const matCardStyle = require('./styles/mat-card').matCard;
+
+const vendorStyles = require('./styles/vendor');
 
 module.exports = class extends ClientGenerator {
     constructor(args, opts) {
@@ -95,10 +100,6 @@ module.exports = class extends ClientGenerator {
         // If the templates doesnt need to be overrriden then just return `super._writing()` here
         const phaseFromJHipster = super._writing();
         const customPhaseSteps = {
-            writeAdditionalFile() {
-                writeFiles.call(this);
-            },
-
             addMaterialDependencies() {
                 this.log('\n');
                 this.log(`${chalk.yellow('     GENERATOR-ANGULAR-FLEX      ')}`);
@@ -111,7 +112,28 @@ module.exports = class extends ClientGenerator {
                 this.addNpmDependency('material-icons', 'latest');
 
                 this.angularAppName = this.getAngularAppName();
-                this.addAngularModule('', 'Material', 'material', 'material', false, this.ANGULAR);            }
+                this.addAngularModule('', 'Material', 'material', 'material', false, this.ANGULAR);
+            },
+
+            addGlobalScss() {
+                this.log('\n');
+                this.log('Adding global scss styles..');
+
+                this.addMainSCSSStyle(matToolbarStyle.style, matToolbarStyle.comment);
+                this.addMainSCSSStyle(pageHeaderStyle.style, pageHeaderStyle.comment);
+                this.addMainSCSSStyle(matCardStyle.style, matCardStyle.comment);
+            },
+
+            addVendorScss() {
+                this.log('\n');
+                this.log('Adding vendor scss styles for material Ui');
+
+                Object.keys(vendorStyles).forEach(e => this.addVendorSCSSStyle(vendorStyles[e].style, vendorStyles[e].comment));
+            },
+
+            writeAdditionalFile() {
+                writeFiles.call(this);
+            }
         };
         return Object.assign(phaseFromJHipster, customPhaseSteps);
     }
