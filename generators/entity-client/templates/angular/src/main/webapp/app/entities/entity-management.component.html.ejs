@@ -177,6 +177,9 @@
                                     <%_ } _%>
                                 <%_ } _%>
                             </div>
+                            <div *ngIf="!<%= entityInstance %>.<%= relationshipFieldNamePlural %>.length">
+                                No <%= relationshipFieldNamePlural %>
+                            </div>
                         </li>
                             <%_ } else if (ownerSide === true) { _%>
                         <li>
