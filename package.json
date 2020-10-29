@@ -1,6 +1,6 @@
 {
   "name": "generator-jhipster-angular-flex",
-  "version": "0.2.28",
+  "version": "0.3.0",
   "description": "This module extends the angular client side to provide flex layouts for every entity with generated material cards and list views for every entity. This module imports @angular/material to the vendor.scss file and modifies app.module.ts to include an angular material module.",
   "keywords": [
     "yeoman-generator",
