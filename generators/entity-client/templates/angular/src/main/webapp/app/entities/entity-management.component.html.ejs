@@ -162,11 +162,11 @@
                         <mat-icon>pageview</mat-icon>
                         <span>View</span>
                     </button>
-                    <button mat-button [routerLink]="['/person',person.id,'edit']">
+                    <button mat-button [routerLink]="['/<% entityUrl %>', <%= entityInstance %>.id,'edit']">
                         <mat-icon>edit</mat-icon>
                         <span>Edit</span>
                     </button>
-                    <button mat-button (click)="delete(person)">
+                    <button mat-button (click)="delete(<%= entityInstance %>)">
                         <mat-icon>delete</mat-icon>
                         <span>Delete</span>
                     </button>
