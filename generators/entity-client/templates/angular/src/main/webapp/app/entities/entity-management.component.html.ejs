@@ -1,8 +1,9 @@
 <div>
     <mat-toolbar id="page-heading" data-cy="<%= entityClass %>Heading">
-        <span id="page-header" jhiTranslate="<%= i18nKeyPrefix %>.home.title"><%= entityClassPluralHumanized %></span>
 
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-between">
+            <span id="page-header" jhiTranslate="<%= i18nKeyPrefix %>.home.title"><%= entityClassPluralHumanized %></span>
+
             <%_ if (!readOnly) { _%>
             <button mat-raised-button color="primary" id="jh-create-entity"
                 data-cy="entityCreateButton" class="jh-create-entity create-<%= entityUrl %>"
@@ -172,6 +173,10 @@
                                         <%_ } _%>
                                     <%_ } _%>
                                 <%_ } _%>
+                            </div>
+                            <%_ } else { _%>
+                            <div>
+                                One to Many: <%= relationshipNameHumanized %>
                             </div>
                             <%_ } _%>
                         </li>
