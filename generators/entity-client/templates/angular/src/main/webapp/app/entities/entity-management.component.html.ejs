@@ -65,12 +65,12 @@
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>
-                        {{ <%_ entityInstant %>.name || <%_ entityInstant %>.title }}
+                        {{ <%_ entityInstance %>.name || <%_ entityInstance %>.title }}
                     </mat-card-title>
                     <mat-card-subtitle>
-                        {{ <%_ entityInstant %>.description || <%_ entityInstant %>.summary }}
-                        <span *ngIf="<%_ entityInstant %>.created">
-                            <mat-icon>calendar</mat-icon> {{ <%_ entityInstant %>.created || <%_ entityInstant %>.createdDate }}
+                        {{ <%_ entityInstance %>.description || <%_ entityInstance %>.summary }}
+                        <span *ngIf="<%_ entityInstance %>.created">
+                            <mat-icon>calendar</mat-icon> {{ <%_ entityInstance %>.created || <%_ entityInstance %>.createdDate }}
                         </span>
                     </mat-card-subtitle>
                 </mat-card-header>

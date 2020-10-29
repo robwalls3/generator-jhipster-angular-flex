@@ -1,9 +1,11 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const EntityClientGenerator = require('generator-jhipster/generators/entity-client');
-const angularFiles = require('./files').angularFiles;
+const mainFiles = require('./files').getMainFiles;
+const testFiles = require('./files').getTestFiles;
 
-const CLIENT_NG2_TEMPLATES_DIR = 'angular';
+const mainTemplates = '../templates/angular/src/main/webapp/app';
+const testTemplates = '../templates/angular';
 
 module.exports = class extends EntityClientGenerator {
     constructor(args, opts) {
@@ -52,7 +54,14 @@ module.exports = class extends EntityClientGenerator {
          * ```
          */
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._initializing();
+
+        const phaseFromJHipster = super._initializing();
+        const myCustomPhaseSteps = {
+            myFirstStep() {
+                // do nothing of course.
+            }
+        };
+        return Object.assign(phaseFromJHipster, myCustomPhaseSteps);
     }
 
     get prompting() {
@@ -76,8 +85,11 @@ module.exports = class extends EntityClientGenerator {
         const myCustomPhaseSteps = {
             overwriteComponent() {
                 // Overwrite:
-                const templatesDir = CLIENT_NG2_TEMPLATES_DIR;
-                this.writeFilesToDisk(angularFiles, templatesDir);
+                this.log('\n');
+                this.log(`Writing from ${this.CLIENT_TEST_SRC_DIR} and ${this.ANGULAR_DIR}`);
+
+                this.writeFilesToDisk(mainFiles(this.ANGULAR_DIR), this, false, mainTemplates);
+                this.writeFilesToDisk(testFiles(this.CLIENT_TEST_SRC_DIR), this, false, testTemplates);
             }
         };
 
