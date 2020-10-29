@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
+const _ = require('lodash');
 const EntityClientGenerator = require('generator-jhipster/generators/entity-client');
 const mainFiles = require('./files').getMainFiles;
 const testFiles = require('./files').getTestFiles;
@@ -47,6 +48,8 @@ module.exports = class extends EntityClientGenerator {
                 this.log('\n');
                 this.log(`Writing from ${this.CLIENT_TEST_SRC_DIR} and ${this.CLIENT_MAIN_SRC_DIR}`);
                 this.log('Creating cards and layouts for an entity...');
+
+                this.frontendAppName = _.upperFirst(this.getAngularAppName()).replace(/App$/, '');
 
                 this.writeFilesToDisk(mainFiles(`${this.CLIENT_MAIN_SRC_DIR}/app/`), this, false, mainTemplates);
                 this.writeFilesToDisk(testFiles(this.CLIENT_TEST_SRC_DIR), this, false, testTemplates);
