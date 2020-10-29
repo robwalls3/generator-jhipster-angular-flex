@@ -61,13 +61,28 @@
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>
-                        {{ <%= entityInstance %>.name || <%= entityInstance %>.title }}
+                        <%_ for (idx in fields) {
+                            const fieldName = fields[idx].fieldName;
+                            if (fieldName === 'name' || fieldName === 'title') {
+                        _%>
+                                {{ <%= entityInstance %>.<%= fieldName %> }}
+                            <%_ } _%>
+                        <%_ } _%>
                     </mat-card-title>
                     <mat-card-subtitle>
-                        {{ <%= entityInstance %>.description || <%= entityInstance %>.summary }}
-                        <span *ngIf="<%= entityInstance %>.created">
-                            <mat-icon>calendar</mat-icon> {{ <%= entityInstance %>.created || <%= entityInstance %>.createdDate }}
-                        </span>
+                        <%_ for (idx in fields) {
+                            const fieldName = fields[idx].fieldName;
+                            if (fieldName === 'description' || fieldName === 'summary') { _%>
+                                {{ <%= entityInstance %>.<%= fieldName %> }}
+                            <%_ }
+
+                            const fieldType = fields[idx].fieldType;
+                            if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
+                            <mat-icon>calendar</mat-icon> <div>{{ <%= entityInstance %>.<%= fieldName %> | date:'medium' }}</div>
+                            <%_ } else if (fieldType === 'LocalDate') { _%>
+                            <mat-icon>calendar</mat-icon> <div>{{ <%= entityInstance %>.<%= fieldName %> | date:'mediumDate' }}</div>
+                           <%_ } _%>
+                        <%_ } _%>
                     </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
