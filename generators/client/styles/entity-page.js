@@ -8,7 +8,22 @@ const matToolbar = {
     comment: 'Material Toolbar Justification'
 };
 
+const containers = {
+    style: `
+    .grid-container {
+        overflow-y: auto;
+        height: calc(100vh - 138px);
+    }
+
+    .list-container {
+        overflow-y: auto;
+        height: calc(100vh - 138px);
+    }`,
+    comment: 'Grid/List Containers for scrolling'
+};
+
 module.exports = {
     pageHeader,
-    matToolbar
+    matToolbar,
+    containers
 };
