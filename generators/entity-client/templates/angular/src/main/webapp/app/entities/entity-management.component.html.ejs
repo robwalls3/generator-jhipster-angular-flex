@@ -59,7 +59,7 @@
         <div fxLayout="row wrap" fxLayoutGap="10px grid"
             fxLayoutAlign="center space-between"
             *ngIf="<%= entityInstancePlural %> && <%= entityInstancePlural %>.length > 0 && viewType == 'grid'">
-            <div fxFlex="25%" fxFlex.md="25%" fxFlex.sm="50%" fxFlex.xs="100%" *ngFor="let <%= entityInstance %> of <%= entityInstancePlural %>; trackBy: trackId">
+            <div fxFlex="25%" fxFlex.md="33%" fxFlex.sm="50%" fxFlex.xs="100%" *ngFor="let <%= entityInstance %> of <%= entityInstancePlural %>; trackBy: trackId">
                 <mat-card>
                     <mat-card-header>
                         <mat-card-title>
