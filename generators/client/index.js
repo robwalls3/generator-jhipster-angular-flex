@@ -2,10 +2,8 @@
 const chalk = require('chalk');
 const ClientGenerator = require('generator-jhipster/generators/client');
 const writeFiles = require('./files').writeFiles;
-const pageHeaderStyle = require('./styles/entity-page').pageHeader;
-const matToolbarStyle = require('./styles/entity-page').matToolbar;
-const matCardStyle = require('./styles/mat-card').matCard;
 
+const entityPage = require('./styles/entity-page');
 const vendorStyles = require('./styles/vendor');
 
 module.exports = class extends ClientGenerator {
@@ -118,10 +116,7 @@ module.exports = class extends ClientGenerator {
             addGlobalScss() {
                 this.log('\n');
                 this.log('Adding global scss styles..');
-
-                this.addMainSCSSStyle(matToolbarStyle.style, matToolbarStyle.comment);
-                this.addMainSCSSStyle(pageHeaderStyle.style, pageHeaderStyle.comment);
-                this.addMainSCSSStyle(matCardStyle.style, matCardStyle.comment);
+                Object.keys(entityPage).forEach(e => this.addMainSCSSStyle(entityPage[e].style, entityPage[e].comment));
             },
 
             addVendorScss() {

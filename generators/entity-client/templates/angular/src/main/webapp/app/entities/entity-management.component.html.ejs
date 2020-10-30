@@ -98,6 +98,8 @@
                                 const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
                                 const fieldType = fields[idx].fieldType;
                                 const fieldTypeBlobContent = fields[idx].fieldTypeBlobContent;
+                                if (fieldName === 'name' || fieldName === 'title'
+                                    || fieldName === 'description' || fieldName === 'summary') { continue; }
                             _%>
                             <li>
                                 <mat-icon>gavel</mat-icon>
@@ -217,15 +219,15 @@
                     <mat-card-actions>
                         <button mat-button [routerLink]="['/<%= entityUrl %>', <%= entityInstance %>.id, 'view']">
                             <mat-icon>pageview</mat-icon>
-                            <span>View</span>
+                            <span jhiTranslate="entity.action.view">View</span>
                         </button>
                         <button mat-button [routerLink]="['/<%= entityUrl %>', <%= entityInstance %>.id,'edit']">
                             <mat-icon>edit</mat-icon>
-                            <span>Edit</span>
+                            <span jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button mat-button (click)="delete(<%= entityInstance %>)">
                             <mat-icon>delete</mat-icon>
-                            <span>Delete</span>
+                            <span jhiTranslate="entity.action.delete">Delete</span>
                         </button>
                     </mat-card-actions>
                 </mat-card>
