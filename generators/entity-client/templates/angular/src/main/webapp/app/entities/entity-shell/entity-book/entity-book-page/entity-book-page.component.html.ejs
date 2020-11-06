@@ -1,1 +1,171 @@
-
+<mat-card class="book-page mat-elevation-z4">
+    <mat-card-header>
+        <mat-card-title>
+            <%_ let nameAdded = false _%>
+            <%_ for (idx in fields) {
+                const fieldName = fields[idx].fieldName;
+                if (fieldName === 'name' || fieldName === 'title') {
+                    nameAdded = true
+            _%>
+                    {{ <%= entityInstance %>.<%= fieldName %> }}
+                <%_ } _%>
+            <%_ } _%>
+            <%_ if (nameAdded === false) { _%>
+                <%= entityClassHumanized %>
+            <%_ } _%>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <%_ for (idx in fields) {
+                const fieldName = fields[idx].fieldName;
+                if (fieldName === 'description' || fieldName === 'summary') { _%>
+                    {{ <%= entityInstance %>.<%= fieldName %> }}
+                <%_ }
+                const fieldType = fields[idx].fieldType;
+                if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
+                <mat-icon>calendar</mat-icon> <div>{{ <%= entityInstance %>.<%= fieldName %> | date:'medium' }}</div>
+                <%_ } else if (fieldType === 'LocalDate') { _%>
+                <mat-icon>calendar</mat-icon> <div>{{ <%= entityInstance %>.<%= fieldName %> | date:'mediumDate' }}</div>
+            <%_ } _%>
+            <%_ } _%>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <ul class="no-bullets">
+            <%_ for (idx in fields) {
+                const fieldName = fields[idx].fieldName;
+                const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
+                const fieldType = fields[idx].fieldType;
+                const fieldTypeBlobContent = fields[idx].fieldTypeBlobContent;
+                if (fieldName === 'name' || fieldName === 'title'
+                    || fieldName === 'description' || fieldName === 'summary') { continue; }
+            _%>
+            <li>
+                <mat-icon>gavel</mat-icon>
+                <%_ if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
+                <div>
+                    <a *ngIf="<%= entityInstance %>.<%= fieldName %>" (click)="openFile(<%= entityInstance %>.<%= fieldName %>ContentType, <%= entityInstance %>.<%= fieldName %>)">
+                        <img [src]="'data:' + <%= entityInstance %>.<%= fieldName %>ContentType + ';base64,' + <%= entityInstance %>.<%= fieldName %>" style="max-height: 30px;" alt="<%= entityInstance %> image"/>
+                    </a>
+                    <span *ngIf="<%= entityInstance %>.<%= fieldName %>">{{ <%= entityInstance %>.<%= fieldName %>ContentType }}, {{ byteSize(<%= entityInstance %>.<%= fieldName %>) }}</span>
+                </div>
+                <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'any') { _%>
+                <div>
+                    <a *ngIf="<%= entityInstance %>.<%= fieldName %>" (click)="openFile(<%= entityInstance %>.<%= fieldName %>ContentType, <%= entityInstance %>.<%= fieldName %>)" jhiTranslate="entity.action.open">open</a>
+                    <span *ngIf="<%= entityInstance %>.<%= fieldName %>">{{ <%= entityInstance %>.<%= fieldName %>ContentType }}, {{ byteSize(<%= entityInstance %>.<%= fieldName %>) }}</span>
+                </div>
+                <%_ } else if (fields[idx].fieldIsEnum) { _%>
+                <div jhiTranslate="{{ '<%= frontendAppName %>.<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %> }}">{{ <%= entityInstance %>.<%= fieldName %> }}</div>
+                <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
+                <div>{{ <%= entityInstance %>.<%= fieldName %> | date:'medium' }}</div>
+                <%_ } else if (fieldType === 'LocalDate') { _%>
+                <div>{{ <%= entityInstance %>.<%= fieldName %> | date:'mediumDate' }}</div>
+                <%_ } else if (fieldType === 'Duration') { _%>
+                <div title="{{ <%= entityInstance %>.<%= fieldName %> }}">{{ <%= entityInstance %>.<%= fieldName %> | duration }}</div>
+                <%_ } else { _%>
+                <div>{{ <%= entityInstance %>.<%= fieldName %> }}</div>
+                <%_ } _%>
+            </li>
+            <%_ } _%>
+            <%_ for (idx in relationships) {
+                const relationshipType = relationships[idx].relationshipType;
+                const ownerSide = relationships[idx].ownerSide;
+                const relationshipFieldName = relationships[idx].relationshipFieldName;
+                const relationshipFieldNamePlural = relationships[idx].relationshipFieldNamePlural;
+                const otherEntityName = relationships[idx].otherEntityName;
+                const otherEntityStateName = relationships[idx].otherEntityStateName;
+                const otherEntityField = relationships[idx].otherEntityField;
+                const otherEntityFieldCapitalized = relationships[idx].otherEntityFieldCapitalized;
+                const otherEntityRelationshipName = relationships[idx].otherEntityRelationshipName;
+                let someEntityExists = false;
+            _%>
+                <%_ if (relationshipType === 'many-to-one'
+                        || (relationshipType === 'one-to-one' && ownerSide === true)
+                        || (relationshipType === 'many-to-many' && ownerSide === true && pagination === 'no')) {
+                _%>
+            <li>
+                <mat-icon>link</mat-icon>
+                <div>
+                    <%_ if (otherEntityName === 'user') { _%>
+                        <%_ if (relationshipType === 'many-to-many') { _%>
+                    <span *ngFor="let <%= relationshipFieldName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>; let last = last">
+                        {{ <%= relationshipFieldName %>.<%= otherEntityField %> }}{{ last ? '' : ', ' }}
+                    </span>
+                    <span *ngIf="!<%= entityInstance %>.<%= relationshipFieldNamePlural %>?.length">
+                        No <%= relationshipFieldNamePlural %>
+                    </span>
+                        <%_ } else { _%>
+                            <%_ if (dto === 'no') { _%>
+                    {{ <%= entityInstance + "." + relationshipFieldName + "?." + otherEntityField %> }}
+                    <div *ngIf="!<%= entityInstance %>.<%= relationshipFieldName %>">
+                        No <%= relationshipFieldName %>
+                    </div>
+                            <%_ } else { _%>
+                    {{ <%= entityInstance + "." + relationshipFieldName + otherEntityFieldCapitalized %> }}
+                    <div *ngIf="!<%= entityInstance + "." + relationshipFieldName + otherEntityFieldCapitalized %>">
+                        No <%= relationshipFieldName %>
+                    </div>
+                            <%_ } _%>
+                        <%_ } _%>
+                    <%_ } else { _%>
+                        <%_ if (relationshipType === 'many-to-many') { _%>
+                    <span *ngFor="let <%= relationshipFieldName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>; let last = last">
+                        <a class="form-control-static" [routerLink]="['/<%= otherEntityStateName %>', <%= relationshipFieldName %>?.id, 'view']">{{ <%= relationshipFieldName %>.<%= otherEntityField %> }}</a>{{ last ? '' : ', ' }}
+                    </span>
+                    <span *ngIf="!<%= entityInstance %>.<%= relationshipFieldNamePlural %>?.length">
+                        No <%= relationshipFieldNamePlural %>
+                    </span>
+                        <%_ } else { _%>
+                            <%_ if (dto === 'no') { _%>
+                    <div *ngIf="<%= entityInstance + "." + relationshipFieldName %>">
+                        <a [routerLink]="['/<%= otherEntityStateName %>', <%= entityInstance + "." + relationshipFieldName + "?.id" %>, 'view']" >{{ <%= entityInstance + "." + relationshipFieldName + "?." + otherEntityField %> }}</a>
+                    </div>
+                    <span *ngIf="!<%= entityInstance + "." + relationshipFieldName %>">
+                        No <%= relationshipFieldName %>
+                    </span>
+                        <%_ } else { _%>
+                    <div *ngIf="<%= entityInstance + "." + relationshipFieldName + "Id" %>">
+                        <a [routerLink]="['/<%= otherEntityStateName %>', <%= entityInstance + "." + relationshipFieldName + "Id" %> %>, 'view']" >{{ <%= entityInstance + "." + relationshipFieldName + otherEntityFieldCapitalized %> }}</a>
+                    </div>
+                    <span *ngIf="!<%= entityInstance %>.<%= relationshipFieldName + "Id" %>">
+                        No <%= relationshipFieldName %>
+                    </span>
+                            <%_ } _%>
+                        <%_ } _%>
+                    <%_ } _%>
+                </div>
+            </li>
+                <%_ } else if (ownerSide === true) { _%>
+            <li>
+                <mat-icon>link</mat-icon>
+                <div>
+                    <span *ngFor="let <%= otherEntityName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>">
+                        <a [routerLink]="['/<%= otherEntityName %>', <%= otherEntityName %>.id, 'view']">
+                            <small>
+                                {{ <%= otherEntityName %>.id }}
+                            </small>
+                        </a>
+                    </span>
+                    <span *ngIf="!<%= entityInstance %>.<%= relationshipFieldNamePlural %>?.length">
+                        No <%= relationshipFieldNamePlural %>
+                    </span>
+                </div>
+            </li>
+                <%_ } _%>
+            <%_ } _%>
+        </ul>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button [routerLink]="['/<%= entityUrl %>', <%= entityInstance %>.id, 'view']">
+            <mat-icon>pageview</mat-icon>
+            <span jhiTranslate="entity.action.view">View</span>
+        </button>
+        <button mat-button [routerLink]="['/<%= entityUrl %>', <%= entityInstance %>.id,'edit']">
+            <mat-icon>edit</mat-icon>
+            <span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+        <button mat-button (click)="delete(<%= entityInstance %>)">
+            <mat-icon>delete</mat-icon>
+            <span jhiTranslate="entity.action.delete">Delete</span>
+        </button>
+    </mat-card-actions>
+</mat-card>

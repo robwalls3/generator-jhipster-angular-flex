@@ -16,7 +16,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -%>
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 <%_ if (!readOnly) { _%>
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 <%_ } _%>
@@ -26,14 +26,44 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
  templateUrl: './<%= entityFileName %>-book-page.component.html',
  styleUrls: ['./<%= entityFileName %>-book-page.component.scss']
 })
-export class <%= entityAngularName %>BookPageComponent implements OnInit {
+export class <%= entityAngularName %>BookPageComponent implements OnInit, OnDestroy {
+
+    mobileQuery: MediaQueryList;
+    private _mobileQueryListener: (e: any) => void;
+    modern = false;
 
     @Input() <%= entityInstance %>!: I<%= entityAngularName %>;
 
-    constructor(protected modalService: NgbModal) {
+    constructor(protected modalService: NgbModal,
+        media: MediaMatcher,
+        changeDetectorRef: ChangeDetectorRef) {
+            this.mobileQuery = media.matchMedia('(max-width: 768px)');
+            this._mobileQueryListener = (e) => changeDetectorRef.detectChanges();
+
+            try {
+                // Chrome & Firefox
+                this.modern = true;
+                this.mobileQuery.addEventListener('change', this._mobileQueryListener);
+            } catch (e1) {
+                this.modern = false;
+                try {
+                    // Safari
+                    this.mobileQuery.addListener(this._mobileQueryListener);
+                } catch (e2) {
+                    // Handle error
+                }
+            }
     }
 
     ngOnInit(): void {
+    }
+
+    ngOnDestroy(): void {
+        if(this.modern){
+            this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
+        }else{
+            this.mobileQuery.removeListener(this._mobileQueryListener);
+        }
     }
 
     delete(<%= entityInstance %>: I<%= entityAngularName %>): void {
