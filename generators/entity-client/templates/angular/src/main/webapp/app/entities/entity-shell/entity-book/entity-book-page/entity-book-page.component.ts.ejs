@@ -16,7 +16,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -%>
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy } from '@angular/core';
 <%_ if (!readOnly) { _%>
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { <%= entityClass %>DeleteDialogComponent } from '../../../<%= entityFileName %>-delete-dialog.component';
