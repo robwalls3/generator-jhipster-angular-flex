@@ -18,6 +18,7 @@
 -%>
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 import { <%= frontendAppName %>SharedModule } from 'app/shared/shared.module';
 import { <%= entityAngularName %>Component } from './<%= entityFileName %>.component';
@@ -32,36 +33,36 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
-import {  <%= entityAngularName %>ShellModule } from './<%= entityFileName %>-shell/<%= entityFileName %>-shell.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
     imports: [
         <%= frontendAppName %>SharedModule,
-        RouterModule.forChild(<%= entityInstance %>Route),
+        RouterModule,
         MatToolbarModule,
         MatCardModule,
         MatIconModule,
         MatButtonModule,
         FlexLayoutModule,
-        <%= entityAngularName %>ShellModule,
+        MatMenuModule,
+        MatListModule,
+        CommonModule,
     ],
     declarations: [
-        <%= entityAngularName %>Component,
-        <%= entityAngularName %>DetailComponent,
-        <%_ if (!readOnly) { _%>
-        <%= entityAngularName %>UpdateComponent,
-        <%= entityAngularName %>DeleteDialogComponent,
-        <%_ } %>
+        <%= entityAngularName %>ShellComponent,
+        <%= entityAngularName %>GridComponent,
+        <%= entityAngularName %>CardComponent,
+        <%= entityAngularName %>ListComponent,
     ],
     exports: [
         <%_ if (!readOnly) { _%>
-        <%= entityAngularName %>DeleteDialogComponent,
+        <%= entityAngularName %>ShellComponent,
         <%_ } %>
     ],
     <%_ if (!readOnly) { _%>
     entryComponents: [
-        <%= entityAngularName %>DeleteDialogComponent
+        <%= entityAngularName %>ShellComponent
     ]
     <%_ } _%>
 })
-export class <%= frontendAppName %><%= locals.microserviceName ? upperFirstCamelCase(locals.microserviceName) : '' %><%= entityAngularName %>Module {}
+export class <%= entityAngularName %>ShellModule {}

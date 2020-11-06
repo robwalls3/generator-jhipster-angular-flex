@@ -10,6 +10,11 @@ const matToolbar = {
 
 const containers = {
     style: `
+    .two-toolbar-wrapper {
+        overflow-y: auto;
+        height: calc(100vh - 133px);
+    }
+
     .grid-container {
         overflow-y: auto;
         height: calc(100vh - 138px);

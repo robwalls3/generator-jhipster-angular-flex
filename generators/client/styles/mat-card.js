@@ -8,7 +8,7 @@ const matCard = {
           background-image: linear-gradient(#becacf, #fff);
         }
 
-        .mat-card-content ul {
+        .mat-card-content ul.no-bullets {
           padding-left: 15px;
 
           li {

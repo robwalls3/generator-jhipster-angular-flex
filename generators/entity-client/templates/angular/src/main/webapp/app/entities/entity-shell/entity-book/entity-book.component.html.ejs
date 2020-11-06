@@ -1,0 +1,9 @@
+<div class="content p-2"
+    *ngIf="<%= entityInstancePlural %> && <%= entityInstancePlural %>.length > 0">
+
+    <<%= jhiPrefixDashed %>-<%= entityFileName %>-book-page
+        class="book-page"
+        *ngFor="let <%= entityInstance %> of <%= entityInstancePlural %>; trackBy: trackId"
+        [<%= entityInstance %>]="<%= entityInstance %>">
+    </<%= jhiPrefixDashed %>-<%= entityFileName %>-book-page>
+</div>

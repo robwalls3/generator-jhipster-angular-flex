@@ -19,12 +19,15 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: '<%= jhiPrefixDashed %>-<%= entityFileName %>',
-    templateUrl: './<%= entityFileName %>.component.html'
+  selector: '<%= jhiPrefixDashed %>-<%= entityFileName %>-grid',
+  templateUrl: './<%= entityFileName %>-grid.component.html',
+  styleUrls: ['./<%= entityFileName %>-grid.component.scss']
 })
-export class <%= entityAngularName %>Component {
+export class <%= entityAngularName %>GridComponent {
 
-    query?: any = {};
+  @Input() <%= entityInstancePlural %>?: I<%= entityAngularName %>[];
 
-    constructor(){ }
+  constructor() {
+  }
+
 }

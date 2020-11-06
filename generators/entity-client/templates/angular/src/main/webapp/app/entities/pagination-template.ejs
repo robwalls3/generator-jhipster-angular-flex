@@ -51,13 +51,15 @@
         this.isLoading = true;
         const pageToLoad: number = page || this.page || 1;
 
+        this.queryParams.size = this.queryParams.size ?? this.itemsPerPage;
+        this.queryParams.page = this.queryParams.page ?? pageToLoad - 1;
+        this.queryParams.sort = this.queryParams.sort ?? this.sort();
+
         <%_ if (searchEngine !== false) { _%>
         if (this.currentSearch) {
-            this.<%= entityInstance %>Service.search({
-                page: pageToLoad - 1,
-                query: this.currentSearch,
-                size: this.itemsPerPage,
-                sort: this.sort()}).subscribe(
+            this.queryParams.query = this.queryParams.query ?? this.currentSearch;
+
+            this.<%= entityInstance %>Service.search(this.queryParams).subscribe(
                     (res: HttpResponse<I<%= entityAngularName %>[]>) => {
                         this.isLoading = false;
                         this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
@@ -71,10 +73,7 @@
         }
         <%_ } _%>
 
-        this.<%= entityInstance %>Service.query({
-            page: pageToLoad - 1,
-            size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
+        this.<%= entityInstance %>Service.query(this.queryParams).subscribe(
                 (res: HttpResponse<I<%= entityAngularName %>[]>) => {
                     this.isLoading = false;
                     this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);

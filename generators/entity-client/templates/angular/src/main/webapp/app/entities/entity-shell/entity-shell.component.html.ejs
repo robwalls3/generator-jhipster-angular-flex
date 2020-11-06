@@ -1,0 +1,89 @@
+<div>
+    <mat-toolbar id="page-heading" data-cy="<%= entityClass %>Heading">
+
+        <div class="d-flex justify-content-between">
+            <span id="page-header" jhiTranslate="<%= i18nKeyPrefix %>.home.title"><%= entityClassPluralHumanized %></span>
+
+            <%_ if (!readOnly) { _%>
+            <button mat-raised-button color="primary" id="jh-create-entity"
+                data-cy="entityCreateButton" class="jh-create-entity create-<%= entityUrl %>"
+                [routerLink]="['/<%= entityUrl %>/new']">
+                <mat-icon>add</mat-icon>
+                <span <% if (searchEngine !== false) { %>class="hidden-sm-down" <% } %> jhiTranslate="<%= i18nKeyPrefix %>.home.createLabel">
+                Create a new <%= entityClassHumanized %>
+                </span>
+            </button>
+            <%_ } _%>
+        </div>
+
+
+        <div id="rightGroup">
+            <button mat-icon-button (click)="viewType = 'list'">
+                <mat-icon>view_list</mat-icon>
+            </button>
+            <button mat-icon-button (click)="viewType = 'grid'">
+                <mat-icon>view_comfy</mat-icon>
+            </button>
+            <button mat-icon-button (click)="viewType = 'book'">
+                <mat-icon>chrome_reader</mat-icon>
+            </button>
+        </div>
+    </mat-toolbar>
+
+    <<%= jhiPrefixDashed %>-alert-error></<%= jhiPrefixDashed %>-alert-error>
+    <<%= jhiPrefixDashed %>-alert></<%= jhiPrefixDashed %>-alert>
+
+    <%_ if (searchEngine !== false) { _%>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="<% if (enableTranslation) { %>{{ '<%= i18nKeyPrefix %>.home.search' | translate }}<% } else { %>Query<% } %>">
+
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <fa-icon icon="search"></fa-icon>
+                    </button>
+
+                    <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+                        <fa-icon icon="trash-alt"></fa-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <%_ } _%>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="<%= entityInstancePlural %>?.length === 0">
+        <span jhiTranslate="<%= i18nKeyPrefix %>.home.notFound">No <%= entityInstancePlural %> found</span>
+    </div>
+
+    <div class="content two-toolbar-wrapper">
+        <<%= jhiPrefixDashed %>-<%= entityFileName %>-list
+            [<%= entityInstancePlural %>]="<%= entityInstancePlural %>"
+            *ngIf="viewType === 'list'">
+        </<%= jhiPrefixDashed %>-<%= entityFileName %>-list>
+
+        <<%= jhiPrefixDashed %>-<%= entityFileName %>-grid
+            [<%= entityInstancePlural %>]="<%= entityInstancePlural %>"
+            *ngIf="viewType === 'grid'">
+        </<%= jhiPrefixDashed %>-<%= entityFileName %>-grid>
+
+        <<%= jhiPrefixDashed %>-<%= entityFileName %>-book
+            [<%= entityInstancePlural %>]="<%= entityInstancePlural %>"
+            *ngIf="viewType === 'book'">
+        </<%= jhiPrefixDashed %>-<%= entityFileName %>-book>
+
+        <%_ if (pagination === 'pagination') { _%>
+
+        <div *ngIf="<%= entityInstancePlural %> && <%= entityInstancePlural %>.length > 0">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+            </div>
+        </div>
+        <%_ } _%>
+    </div>
+</div>

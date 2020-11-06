@@ -18,13 +18,17 @@
 -%>
 import { Component } from '@angular/core';
 
+
 @Component({
-    selector: '<%= jhiPrefixDashed %>-<%= entityFileName %>',
-    templateUrl: './<%= entityFileName %>.component.html'
+  selector: '<%= jhiPrefixDashed %>-<%= entityFileName %>-book',
+  templateUrl: './<%= entityFileName %>-book.component.html',
+  styleUrls: ['./<%= entityFileName %>-book.component.scss']
 })
-export class <%= entityAngularName %>Component {
+export class <%= entityAngularName %>BookComponent {
 
-    query?: any = {};
+  @Input() <%= entityInstancePlural %>?: I<%= entityAngularName %>[];
 
-    constructor(){ }
+  constructor() {
+  }
+
 }
