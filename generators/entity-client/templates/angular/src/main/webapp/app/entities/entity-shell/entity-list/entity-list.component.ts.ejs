@@ -16,18 +16,11 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { <%_ if (pagination !== 'no') { _%>HttpHeaders, <% } %>HttpResponse } from '@angular/common/http';
-<%_ if (pagination === 'pagination') { _%>
-import { ActivatedRoute, Router } from '@angular/router';
-<%_ } else if (searchEngine !== false) { _%>
-import { ActivatedRoute } from '@angular/router';
-<%_ } _%>
-import { Subscription<% if (pagination === 'pagination') { %>, combineLatest<% } %> } from 'rxjs';
-import { JhiEventManager <% if (pagination === 'infinite-scroll') { %>, JhiParseLinks <% } %><% if (fieldsContainBlob) { %>, JhiDataUtils<% } %> } from 'ng-jhipster';
+import { Component, Input, OnInit } from '@angular/core';
 <%_ if (!readOnly) { _%>
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 <%_ } _%>
+import { <%= entityClass %>DeleteDialogComponent } from '../../<%= entityFileName %>-delete-dialog.component';
 
 @Component({
   selector: '<%= jhiPrefixDashed %>-<%= entityFileName %>-list',
@@ -36,12 +29,17 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class <%= entityAngularName %>ListComponent implements OnInit {
 
-  @Input() <%= entityInstancePlural %>?: I<%= entityAngularName %>[];
+    @Input() <%= entityInstancePlural %>?: I<%= entityAngularName %>[];
 
-  constructor(protected modalService: NgbModal) {
-  }
+    constructor(protected modalService: NgbModal) {
+    }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
+
+    delete(<%= entityInstance %>: I<%= entityAngularName %>): void {
+        const modalRef = this.modalService.open(<%= entityClass %>DeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+        modalRef.componentInstance.<%= entityInstance %> = <%= entityInstance %>;
+    }
 
 }

@@ -21,24 +21,27 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { <%= frontendAppName %>SharedModule } from 'app/shared/shared.module';
-import { <%= entityAngularName %>Component } from './<%= entityFileName %>.component';
-import { <%= entityAngularName %>DetailComponent } from './<%= entityFileName %>-detail.component';
-<%_ if (!readOnly) { _%>
-import { <%= entityAngularName %>UpdateComponent } from './<%= entityFileName %>-update.component';
-import { <%= entityAngularName %>DeleteDialogComponent } from './<%= entityFileName %>-delete-dialog.component';
-<%_ } _%>
-import { <%= entityInstance %>Route } from './<%= entityFileName %>.route';
+import { <%= entityAngularName %>ShellComponent } from './<%= entityFileName %>-shell.component';
+import { <%= entityAngularName %>GridComponent } from './<%= entityFileName %>-grid/<%= entityFileName %>-grid.component';
+import { <%= entityAngularName %>CardComponent } from './<%= entityFileName %>-grid/<%= entityFileName %>-card/<%= entityFileName %>-card.component';
+import { <%= entityAngularName %>ListComponent } from './<%= entityFileName %>-list/<%= entityFileName %>-list.component';
+import { <%= entityAngularName %>BookComponent } from './<%= entityFileName %>-book/<%= entityFileName %>-book.component';
+import { <%= entityAngularName %>BookPageComponent } from './<%= entityFileName %>-book/<%= entityFileName %>-book-page/<%= entityFileName %>-book-page.component';
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
     imports: [
         <%= frontendAppName %>SharedModule,
         RouterModule,
+        CommonModule,
         MatToolbarModule,
         MatCardModule,
         MatIconModule,
@@ -46,7 +49,7 @@ import { MatMenuModule } from '@angular/material/menu';
         FlexLayoutModule,
         MatMenuModule,
         MatListModule,
-        CommonModule,
+        MatExpansionModule,
     ],
     declarations: [
         <%= entityAngularName %>ShellComponent,

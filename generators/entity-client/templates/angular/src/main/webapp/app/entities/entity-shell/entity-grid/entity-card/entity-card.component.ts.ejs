@@ -20,6 +20,7 @@ import { Component, Input, OnInit } from '@angular/core';
 <%_ if (!readOnly) { _%>
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 <%_ } _%>
+import { <%= entityClass %>DeleteDialogComponent } from '../../<%= entityFileName %>-delete-dialog.component';
 
 @Component({
  selector: '<%= jhiPrefixDashed %>-<%= entityFileName %>-card',
