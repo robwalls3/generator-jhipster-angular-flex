@@ -42,7 +42,8 @@ const ObjectFields = Object.keys(new <%= entityAngularName %>());
 
 @Component({
     selector: '<%= jhiPrefixDashed %>-<%= entityFileName %>-shell',
-    templateUrl: './<%= entityFileName %>-shell.component.html'
+    templateUrl: './<%= entityFileName %>-shell.component.html',
+    styleUrls: ['./<%= entityFileName %>-shell.component.scss']
 })
 export class <%= entityAngularName %>ShellComponent implements OnInit, OnDestroy {
     viewType = "grid";
