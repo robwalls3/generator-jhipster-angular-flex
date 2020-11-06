@@ -32,6 +32,10 @@ export class <%= entityAngularName %>ListComponent implements OnInit {
 
     @Input() <%= entityInstancePlural %>?: I<%= entityAngularName %>[];
     @Input() trackId!: any;
+    @Input() loadPage: any;
+
+    predicate!: string;
+    ascending!: boolean;
 
     constructor(protected modalService: NgbModal) {
     }

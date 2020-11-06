@@ -32,7 +32,7 @@ import { I<%= entityAngularName %> } from 'app/shared/model/<%= entityFileName %
 export class <%= entityAngularName %>BookPageComponent implements OnInit, OnDestroy {
 
     mobileQuery: MediaQueryList;
-    private _mobileQueryListener: (e: any) => void;
+    private _mobileQueryListener: () => void;
     modern = false;
 
     @Input() <%= entityInstance %>!: I<%= entityAngularName %>;
@@ -41,7 +41,7 @@ export class <%= entityAngularName %>BookPageComponent implements OnInit, OnDest
         media: MediaMatcher,
         changeDetectorRef: ChangeDetectorRef) {
             this.mobileQuery = media.matchMedia('(max-width: 768px)');
-            this._mobileQueryListener = (e) => changeDetectorRef.detectChanges();
+            this._mobileQueryListener = () => changeDetectorRef.detectChanges();
 
             try {
                 // Chrome & Firefox

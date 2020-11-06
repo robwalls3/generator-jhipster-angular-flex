@@ -29,7 +29,7 @@ import { JhiEventManager <% if (pagination === 'infinite-scroll') { %>, JhiParse
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 <%_ } _%>
 
-import { I<%= entityAngularName %> } from 'app/shared/model/<%= entityModelFileName %>.model';
+import { <%= entityAngularName %>, I<%= entityAngularName %> } from 'app/shared/model/<%= entityModelFileName %>.model';
 <%_ if (pagination !== 'no') { %>
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 <%_ } _%>
@@ -38,6 +38,8 @@ import { <%= entityAngularName %>Service } from '../<%= entityFileName %>.servic
 import { <%= entityAngularName %>DeleteDialogComponent } from '../<%= entityFileName %>-delete-dialog.component';
 <%_ } _%>
 
+const ObjectFields = Object.keys(new <%= entityAngularName %>());
+
 @Component({
     selector: '<%= jhiPrefixDashed %>-<%= entityFileName %>-shell',
     templateUrl: './<%= entityFileName %>-shell.component.html'
@@ -45,6 +47,7 @@ import { <%= entityAngularName %>DeleteDialogComponent } from '../<%= entityFile
 export class <%= entityAngularName %>ShellComponent implements OnInit, OnDestroy {
     viewType = "grid";
     @Input() queryParams?: any = {};
+    fields = ObjectFields;
 
     <%_ if (pagination === 'pagination') { _%>
 <%- include('pagination-template', {toArrayString: toArrayString}); -%>

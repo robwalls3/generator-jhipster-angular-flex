@@ -18,6 +18,19 @@
 
 
         <div id="rightGroup">
+            <mat-form-field class="small-field">
+                <mat-label>Sort By</mat-label>
+                <mat-select>
+                    <mat-option [value]="field" *ngFor="let field of fields">
+                        {{ field }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-button (click)="ascending = !ascending">
+                <span class="small-field">
+                    {{ ascending ? 'Ascending' : 'Descending'}}
+                </span>
+            </button>
             <button mat-icon-button (click)="viewType = 'list'">
                 <mat-icon>view_list</mat-icon>
             </button>
@@ -25,7 +38,7 @@
                 <mat-icon>view_comfy</mat-icon>
             </button>
             <button mat-icon-button (click)="viewType = 'book'">
-                <mat-icon>chrome_reader</mat-icon>
+                <mat-icon>chrome_reader_mode</mat-icon>
             </button>
         </div>
     </mat-toolbar>
@@ -61,7 +74,8 @@
         <<%= jhiPrefixDashed %>-<%= entityFileName %>-list
             [<%= entityInstancePlural %>]="<%= entityInstancePlural %>"
             *ngIf="viewType === 'list'"
-            [trackId]="trackId">
+            [trackId]="trackId"
+            [loadPage]="loadPage">
         </<%= jhiPrefixDashed %>-<%= entityFileName %>-list>
 
         <<%= jhiPrefixDashed %>-<%= entityFileName %>-grid
