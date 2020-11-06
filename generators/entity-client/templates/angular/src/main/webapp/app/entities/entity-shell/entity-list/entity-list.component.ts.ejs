@@ -19,8 +19,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 <%_ if (!readOnly) { _%>
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-<%_ } _%>
 import { <%= entityClass %>DeleteDialogComponent } from '../../<%= entityFileName %>-delete-dialog.component';
+<%_ } _%>
 import { I<%= entityAngularName %> } from 'app/shared/model/<%= entityFileName %>.model';
 
 @Component({
