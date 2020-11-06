@@ -27,6 +27,7 @@ import { I<%= entityAngularName %> } from 'app/shared/model/<%= entityFileName %
 export class <%= entityAngularName %>BookComponent {
 
   @Input() <%= entityInstancePlural %>?: I<%= entityAngularName %>[];
+  @Input() trackId!: any;
 
   constructor() {
   }

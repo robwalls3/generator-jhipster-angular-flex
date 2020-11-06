@@ -60,17 +60,20 @@
     <div class="content two-toolbar-wrapper">
         <<%= jhiPrefixDashed %>-<%= entityFileName %>-list
             [<%= entityInstancePlural %>]="<%= entityInstancePlural %>"
-            *ngIf="viewType === 'list'">
+            *ngIf="viewType === 'list'"
+            [trackId]="trackId">
         </<%= jhiPrefixDashed %>-<%= entityFileName %>-list>
 
         <<%= jhiPrefixDashed %>-<%= entityFileName %>-grid
             [<%= entityInstancePlural %>]="<%= entityInstancePlural %>"
-            *ngIf="viewType === 'grid'">
+            *ngIf="viewType === 'grid'"
+            [trackId]="trackId">
         </<%= jhiPrefixDashed %>-<%= entityFileName %>-grid>
 
         <<%= jhiPrefixDashed %>-<%= entityFileName %>-book
             [<%= entityInstancePlural %>]="<%= entityInstancePlural %>"
-            *ngIf="viewType === 'book'">
+            *ngIf="viewType === 'book'"
+            [trackId]="trackId">
         </<%= jhiPrefixDashed %>-<%= entityFileName %>-book>
 
         <%_ if (pagination === 'pagination') { _%>
