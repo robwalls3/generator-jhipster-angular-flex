@@ -35,11 +35,29 @@
         <%_ if (searchEngine !== false) { _%>
         protected activatedRoute: ActivatedRoute,
         <%_ } _%>
+        media: MediaMatcher,
+        changeDetectorRef: ChangeDetectorRef,
     ) {
         <%_ if (searchEngine !== false) { _%>
         this.currentSearch = this.activatedRoute.snapshot && this.activatedRoute.snapshot.queryParams['search'] ?
             this.activatedRoute.snapshot.queryParams['search'] : '';
         <%_ } _%>
+        this.mobileQuery = media.matchMedia('(max-width: 768px)');
+        this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+
+        try {
+            // Chrome & Firefox
+            this.modern = true;
+            this.mobileQuery.addEventListener('change', this._mobileQueryListener);
+        } catch (e1) {
+            this.modern = false;
+            try {
+            // Safari
+            this.mobileQuery.addListener(this._mobileQueryListener);
+            } catch (e2) {
+            // Handle error
+            }
+        }
     }
 
     loadAll(): void {

@@ -9,4 +9,5 @@ function writeFiles() {
 
     this.copy('_dummy.txt', 'dummy.txt');
     this.copy('_material.module.ts', `${APP_PATH}/app/material/material.module.ts`);
+    this.copy('_compare.ts', `${APP_PATH}/app/shared/util/compare.ts`);
 }

@@ -20,16 +20,18 @@
         <div id="rightGroup">
             <mat-form-field class="small-field">
                 <mat-label>Sort By</mat-label>
-                <mat-select>
+                <mat-select [(ngModel)]="predicate" (selectionChange)="sortData()">
                     <mat-option [value]="field" *ngFor="let field of fields">
                         {{ field }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <button mat-button (click)="ascending = !ascending">
-                <span class="small-field">
-                    {{ ascending ? 'Ascending' : 'Descending'}}
-                </span>
+            <button mat-icon-button
+                [title]="ascending ? 'Click to sort by descending data' : 'Click to sort by ascending data'"
+                (click)="ascending = !ascending; sortData()">
+                <mat-icon>
+                    {{ ascending ? 'arrow_circle_up' : 'arrow_circle_down'}}
+                </mat-icon>
             </button>
             <button mat-icon-button (click)="viewType = 'list'">
                 <mat-icon>view_list</mat-icon>
@@ -72,20 +74,20 @@
 
     <div class="content two-toolbar-wrapper">
         <<%= jhiPrefixDashed %>-<%= entityFileName %>-list
-            [<%= entityInstancePlural %>]="<%= entityInstancePlural %>"
+            [<%= entityInstancePlural %>]="sortedData"
             *ngIf="viewType === 'list'"
             [trackId]="trackId"
             [loadPage]="loadPage">
         </<%= jhiPrefixDashed %>-<%= entityFileName %>-list>
 
         <<%= jhiPrefixDashed %>-<%= entityFileName %>-grid
-            [<%= entityInstancePlural %>]="<%= entityInstancePlural %>"
+            [<%= entityInstancePlural %>]="sortedData"
             *ngIf="viewType === 'grid'"
             [trackId]="trackId">
         </<%= jhiPrefixDashed %>-<%= entityFileName %>-grid>
 
         <<%= jhiPrefixDashed %>-<%= entityFileName %>-book
-            [<%= entityInstancePlural %>]="<%= entityInstancePlural %>"
+            [<%= entityInstancePlural %>]="sortedData"
             *ngIf="viewType === 'book'"
             [trackId]="trackId">
         </<%= jhiPrefixDashed %>-<%= entityFileName %>-book>

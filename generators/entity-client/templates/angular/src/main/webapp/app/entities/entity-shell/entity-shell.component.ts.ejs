@@ -16,7 +16,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { <%_ if (pagination !== 'no') { _%>HttpHeaders, <% } %>HttpResponse } from '@angular/common/http';
 <%_ if (pagination === 'pagination') { _%>
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,7 +28,9 @@ import { JhiEventManager <% if (pagination === 'infinite-scroll') { %>, JhiParse
 <%_ if (!readOnly) { _%>
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 <%_ } _%>
+import { MediaMatcher } from '@angular/cdk/layout';
 
+import { compare } from 'app/shared/util/compare';
 import { <%= entityAngularName %>, I<%= entityAngularName %> } from 'app/shared/model/<%= entityModelFileName %>.model';
 <%_ if (pagination !== 'no') { %>
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
@@ -37,7 +39,6 @@ import { <%= entityAngularName %>Service } from '../<%= entityFileName %>.servic
 <%_ if (!readOnly) { _%>
 import { <%= entityAngularName %>DeleteDialogComponent } from '../<%= entityFileName %>-delete-dialog.component';
 <%_ } _%>
-
 const ObjectFields = Object.keys(new <%= entityAngularName %>());
 
 @Component({
@@ -50,6 +51,13 @@ export class <%= entityAngularName %>ShellComponent implements OnInit, OnDestroy
     @Input() queryParams?: any = {};
     fields = ObjectFields;
 
+    // mobileQuery stuff.
+    mobileQuery: MediaQueryList;
+    private _mobileQueryListener: () => void;
+    modern = false;
+
+    sortedData?: I<%= entityInstancePlural %>[];
+
     <%_ if (pagination === 'pagination') { _%>
 <%- include('pagination-template', {toArrayString: toArrayString}); -%>
     <%_ } else if (pagination === 'infinite-scroll') { _%>
@@ -61,6 +69,12 @@ export class <%= entityAngularName %>ShellComponent implements OnInit, OnDestroy
     ngOnDestroy(): void {
         if (this.eventSubscriber) {
             this.eventManager.destroy(this.eventSubscriber);
+        }
+
+        if (this.modern) {
+            this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
+        } else {
+            this.mobileQuery.removeListener(this._mobileQueryListener);
         }
     }
 
@@ -128,12 +142,28 @@ export class <%= entityAngularName %>ShellComponent implements OnInit, OnDestroy
             });
         }
         this.<%= entityInstancePlural %> = data || [];
+        this.sortData();
         this.ngbPaginationPage = this.page;
     }
 
     protected onError(): void {
         this.ngbPaginationPage = this.page ?? 1;
     }
+
+    sortData(): any {
+
+        const data = this.<%= entityInstancePlural %>?.slice();
+
+        this.sortedData = data?.sort((a, b) => {
+          const isAsc = this.ascending;
+          for(const field of this.fields){
+            if(this.predicate === field){
+              return compare(a[field], b[field], isAsc);
+            }
+          }
+          return 0;
+        });
+      }
 
     <%_ } else if (pagination === 'infinite-scroll') { _%>
 

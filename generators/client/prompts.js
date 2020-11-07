@@ -10,8 +10,8 @@ function askForClient(meta) {
 
     const choices = [
         {
-            value: 'vue',
-            name: 'VueJS'
+            value: 'angular',
+            name: 'Angular'
         }
     ];
 
