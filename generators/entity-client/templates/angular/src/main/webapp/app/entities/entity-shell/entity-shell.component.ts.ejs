@@ -56,7 +56,7 @@ export class <%= entityAngularName %>ShellComponent implements OnInit, OnDestroy
     private _mobileQueryListener: () => void;
     modern = false;
 
-    sortedData?: I<%= entityInstancePlural %>[];
+    sortedData?: I<%= entityAngularName %>[];
 
     <%_ if (pagination === 'pagination') { _%>
 <%- include('pagination-template', {toArrayString: toArrayString}); -%>
@@ -82,16 +82,6 @@ export class <%= entityAngularName %>ShellComponent implements OnInit, OnDestroy
         return item.id!;
     }
 
-    <%_ if (fieldsContainBlob) { _%>
-    byteSize(base64String: string): string {
-        return this.dataUtils.byteSize(base64String);
-    }
-
-    openFile(contentType = '', base64String: string): void {
-        return this.dataUtils.openFile(contentType, base64String);
-    }
-    <%_ } _%>
-
     <%_
     let eventCallBack = 'this.loadAll()';
     if (pagination === 'pagination') {
@@ -111,6 +101,21 @@ export class <%= entityAngularName %>ShellComponent implements OnInit, OnDestroy
         modalRef.componentInstance.<%= entityInstance %> = <%= entityInstance %>;
     }
     <%_ } _%>
+
+    sortData(): any {
+
+        const data = this.<%= entityInstancePlural %>?.slice();
+
+        this.sortedData = data?.sort((a, b) => {
+          const isAsc = this.ascending;
+          for(const field of this.fields){
+            if(this.predicate === field){
+              return compare(a[field], b[field], isAsc);
+            }
+          }
+          return 0;
+        });
+      }
 
 <%_ if (pagination !== 'no') { _%>
     sort(): string[] {
@@ -149,21 +154,6 @@ export class <%= entityAngularName %>ShellComponent implements OnInit, OnDestroy
     protected onError(): void {
         this.ngbPaginationPage = this.page ?? 1;
     }
-
-    sortData(): any {
-
-        const data = this.<%= entityInstancePlural %>?.slice();
-
-        this.sortedData = data?.sort((a, b) => {
-          const isAsc = this.ascending;
-          for(const field of this.fields){
-            if(this.predicate === field){
-              return compare(a[field], b[field], isAsc);
-            }
-          }
-          return 0;
-        });
-      }
 
     <%_ } else if (pagination === 'infinite-scroll') { _%>
 

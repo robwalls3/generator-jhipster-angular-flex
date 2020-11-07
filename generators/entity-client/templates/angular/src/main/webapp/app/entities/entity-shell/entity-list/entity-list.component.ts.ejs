@@ -34,10 +34,10 @@ export class <%= entityAngularName %>ListComponent implements OnInit {
     @Input() trackId!: any;
     @Input() loadPage: any;
 
-    predicate!: string;
-    ascending!: boolean;
-
-    constructor(protected modalService: NgbModal) {
+    constructor(protected modalService: NgbModal,
+    <%_ if (fieldsContainBlob) { _%>
+    protected dataUtils: JhiDataUtils,
+    <%_ } _%>) {
     }
 
     ngOnInit(): void {
@@ -47,5 +47,15 @@ export class <%= entityAngularName %>ListComponent implements OnInit {
         const modalRef = this.modalService.open(<%= entityClass %>DeleteDialogComponent, { size: 'lg', backdrop: 'static' });
         modalRef.componentInstance.<%= entityInstance %> = <%= entityInstance %>;
     }
+
+    <%_ if (fieldsContainBlob) { _%>
+    byteSize(base64String: string): string {
+        return this.dataUtils.byteSize(base64String);
+    }
+
+    openFile(contentType = '', base64String: string): void {
+        return this.dataUtils.openFile(contentType, base64String);
+    }
+    <%_ } _%>
 
 }

@@ -3,6 +3,21 @@
     height: calc(100vh - 133px);
 }
 
-.small-field {
+.two-toolbar-wrapper.layout-is-mobile {
+    overflow-y: auto;
+    height: calc(100vh-197px);
+}
+
+::ng-deep.mat-form-field.small-field {
     font-size: 13px;
+    margin-bottom: -5px;
+
+    .mat-form-field-wrapper {
+        width: 140px;
+    }
+}
+
+mat-toolbar{
+    display: flex;
+    justify-content: space-between;
 }

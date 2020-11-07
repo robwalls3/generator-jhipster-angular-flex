@@ -1,37 +1,45 @@
 <div>
     <mat-toolbar id="page-heading" data-cy="<%= entityClass %>Heading">
-
-        <div class="d-flex justify-content-between">
-            <span id="page-header" jhiTranslate="<%= i18nKeyPrefix %>.home.title"><%= entityClassPluralHumanized %></span>
-
-            <%_ if (!readOnly) { _%>
-            <button mat-raised-button color="primary" id="jh-create-entity"
-                data-cy="entityCreateButton" class="jh-create-entity create-<%= entityUrl %>"
-                [routerLink]="['/<%= entityUrl %>/new']">
-                <mat-icon>add</mat-icon>
-                <span <% if (searchEngine !== false) { %>class="hidden-sm-down" <% } %> jhiTranslate="<%= i18nKeyPrefix %>.home.createLabel">
-                Create a new <%= entityClassHumanized %>
-                </span>
-            </button>
-            <%_ } _%>
+        <div *ngIf="!mobileQuery.matches" class="col-12 pl-0 pr-0 col-md-7">
+            <ng-container *ngTemplateOutlet="headingAndCreate"></ng-container>
         </div>
+        <div *ngIf="!mobileQuery.matches" class="col-12 pr-0 col-md-5">
+            <ng-container *ngTemplateOutlet="sortAndViewButtons"></ng-container>
+        </div>
+        <mat-toolbar-row *ngIf="mobileQuery.matches" class="d-flex justify-content-between">
+            <ng-container *ngTemplateOutlet="headingAndCreate"></ng-container>
+        </mat-toolbar-row>
+        <mat-toolbar-row *ngIf="mobileQuery.matches" class="d-flex justify-content-end">
+            <ng-container *ngTemplateOutlet="sortAndViewButtons"></ng-container>
+        </mat-toolbar-row>
+    </mat-toolbar>
 
 
-        <div id="rightGroup">
-            <mat-form-field class="small-field">
+    <ng-template #headingAndCreate>
+        <span id="page-header" jhiTranslate="testRun1App.<%= entityInstance %>.home.title"><%= entityClassPluralHumanized %></span>
+
+        <button mat-raised-button color="primary" id="jh-create-entity"
+            data-cy="entityCreateButton" class="jh-create-entity create-<%= entityInstance %>"
+            [routerLink]="['/<%= entityInstance %>/new']">
+            <mat-icon>add</mat-icon>
+            <span  jhiTranslate="testRun1App.<%= entityInstance %>.home.createLabel">
+            New <%= entityClassHumanized %>
+            </span>
+        </button>
+    </ng-template>
+
+    <ng-template #sortAndViewButtons>
+        <div class="d-flex justify-content-end p-0">
+            <mat-form-field class="small-field" appearance="standard">
                 <mat-label>Sort By</mat-label>
-                <mat-select [(ngModel)]="predicate" (selectionChange)="sortData()">
+                <mat-select [(ngModel)]="predicate" (selectionChange)="loadPage()">
                     <mat-option [value]="field" *ngFor="let field of fields">
                         {{ field }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <button mat-icon-button
-                [title]="ascending ? 'Click to sort by descending data' : 'Click to sort by ascending data'"
-                (click)="ascending = !ascending; sortData()">
-                <mat-icon>
-                    {{ ascending ? 'arrow_circle_up' : 'arrow_circle_down'}}
-                </mat-icon>
+            <button mat-icon-button (click)="ascending = !ascending; loadPage()">
+                <mat-icon>{{ ascending ? 'arrow_circle_up' : 'arrow_circle_down'}}</mat-icon>
             </button>
             <button mat-icon-button (click)="viewType = 'list'">
                 <mat-icon>view_list</mat-icon>
@@ -43,7 +51,7 @@
                 <mat-icon>chrome_reader_mode</mat-icon>
             </button>
         </div>
-    </mat-toolbar>
+    </ng-template>
 
     <<%= jhiPrefixDashed %>-alert-error></<%= jhiPrefixDashed %>-alert-error>
     <<%= jhiPrefixDashed %>-alert></<%= jhiPrefixDashed %>-alert>
