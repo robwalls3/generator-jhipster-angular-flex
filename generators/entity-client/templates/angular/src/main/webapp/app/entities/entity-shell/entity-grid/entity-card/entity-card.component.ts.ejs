@@ -22,6 +22,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { <%= entityClass %>DeleteDialogComponent } from '../../../<%= entityFileName %>-delete-dialog.component';
 <%_ } _%>
 import { I<%= entityAngularName %> } from 'app/shared/model/<%= entityFileName %>.model';
+<%_ if (fieldsContainBlob) { _%>
+import { JhiDataUtils } from 'ng-jhipster';
+<%_ } _%>
 
 @Component({
  selector: '<%= jhiPrefixDashed %>-<%= entityFileName %>-card',

@@ -23,6 +23,9 @@ import { <%= entityClass %>DeleteDialogComponent } from '../../../<%= entityFile
 <%_ } _%>
 import { MediaMatcher } from '@angular/cdk/layout';
 import { I<%= entityAngularName %> } from 'app/shared/model/<%= entityFileName %>.model';
+<%_ if (fieldsContainBlob) { _%>
+import { JhiDataUtils } from 'ng-jhipster';
+<%_ } _%>
 
 @Component({
  selector: '<%= jhiPrefixDashed %>-<%= entityFileName %>-book-page',
