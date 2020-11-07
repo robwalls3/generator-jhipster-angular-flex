@@ -19,8 +19,8 @@
         <span id="page-header" jhiTranslate="testRun1App.<%= entityInstance %>.home.title"><%= entityClassPluralHumanized %></span>
 
         <button mat-raised-button color="primary" id="jh-create-entity"
-            data-cy="entityCreateButton" class="jh-create-entity create-<%= entityInstance %>"
-            [routerLink]="['/<%= entityInstance %>/new']">
+            data-cy="entityCreateButton" class="jh-create-entity create-<%= entityFileName %>"
+            [routerLink]="['/<%= entityFileName %>/new']">
             <mat-icon>add</mat-icon>
             <span  jhiTranslate="testRun1App.<%= entityInstance %>.home.createLabel">
             New <%= entityClassHumanized %>
