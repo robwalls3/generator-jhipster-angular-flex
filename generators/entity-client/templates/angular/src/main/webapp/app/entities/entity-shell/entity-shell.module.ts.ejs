@@ -67,11 +67,6 @@ import { MatSelectModule } from '@angular/material/select';
         <%_ if (!readOnly) { _%>
         <%= entityAngularName %>ShellComponent,
         <%_ } %>
-    ],
-    <%_ if (!readOnly) { _%>
-    entryComponents: [
-        <%= entityAngularName %>ShellComponent
     ]
-    <%_ } _%>
 })
 export class <%= entityAngularName %>ShellModule {}
