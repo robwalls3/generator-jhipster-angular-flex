@@ -16,13 +16,13 @@
 
 
     <ng-template #headingAndCreate>
-        <span id="page-header" jhiTranslate="<%= i18nKeyPrefix %>.<%= entityInstance %>.home.title"><%= entityClassPluralHumanized %></span>
+        <span id="page-header" jhiTranslate="<%= i18nKeyPrefix %>.home.title"><%= entityClassPluralHumanized %></span>
 
         <button mat-raised-button color="primary" id="jh-create-entity"
             data-cy="entityCreateButton" class="jh-create-entity create-<%= entityFileName %>"
             [routerLink]="['/<%= entityFileName %>/new']">
             <mat-icon>add</mat-icon>
-            <span  jhiTranslate="<%= i18nKeyPrefix %>.<%= entityInstance %>.home.createLabel">
+            <span  jhiTranslate="<%= i18nKeyPrefix %>.home.createLabel">
             New <%= entityClassHumanized %>
             </span>
         </button>
