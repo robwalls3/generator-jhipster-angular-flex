@@ -12,9 +12,13 @@ module.exports = class extends EntityClientGenerator {
     constructor(args, opts) {
         super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
 
-        if (!this.jhipsterContext) {
+        const jhContext = this.jhipsterContext;
+
+        if (!jhContext) {
             this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint angular-flex')}`);
         }
+        this.jhipsterConfig = jhContext.jhipsterConfig;
+        this.configOptions = jhContext.configOptions || {};
     }
 
     get initializing() {
@@ -47,7 +51,8 @@ module.exports = class extends EntityClientGenerator {
                 this.log(`Writing from ${this.CLIENT_TEST_SRC_DIR} and ${this.CLIENT_MAIN_SRC_DIR}`);
                 this.log('Creating cards and layouts for an entity...');
 
-                this.frontendAppName = _.upperFirst(this.getAngularAppName()).replace(/App$/, '');
+                this.frontendAppName = _.upperFirst(this.jhipsterConfig.baseName).replace(/App$/, '');
+                this.angularXAppName = this.frontendAppName;
 
                 this.writeFilesToDisk(mainFiles(`${this.CLIENT_MAIN_SRC_DIR}/app/`), this, false, mainTemplates);
                 this.writeFilesToDisk(testFiles(this.CLIENT_TEST_SRC_DIR), this, false, testTemplates);

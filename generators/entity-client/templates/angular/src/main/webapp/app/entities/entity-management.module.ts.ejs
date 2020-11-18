@@ -26,23 +26,27 @@ import { <%= entityAngularName %>DetailComponent } from './<%= entityFileName %>
 import { <%= entityAngularName %>UpdateComponent } from './<%= entityFileName %>-update.component';
 import { <%= entityAngularName %>DeleteDialogComponent } from './<%= entityFileName %>-delete-dialog.component';
 <%_ } _%>
-import { <%= entityInstance %>Route } from './<%= entityFileName %>.route';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+
 import {  <%= entityAngularName %>ShellModule } from './<%= entityFileName %>-shell/<%= entityFileName %>-shell.module';
 
 @NgModule({
     imports: [
         <%= frontendAppName %>SharedModule,
-        RouterModule.forChild(<%= entityInstance %>Route),
+        RouterModule,
         MatToolbarModule,
         MatCardModule,
         MatIconModule,
         MatButtonModule,
-        FlexLayoutModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatSelectModule,
         <%= entityAngularName %>ShellModule,
     ],
     declarations: [
@@ -64,4 +68,4 @@ import {  <%= entityAngularName %>ShellModule } from './<%= entityFileName %>-sh
     ]
     <%_ } _%>
 })
-export class <%= frontendAppName %><%= locals.microserviceName ? upperFirstCamelCase(locals.microserviceName) : '' %><%= entityAngularName %>Module {}
+export class <%= locals.microserviceName ? upperFirstCamelCase(locals.microserviceName) : '' %><%= entityAngularName %>Module {}
