@@ -69,4 +69,4 @@ import {  <%= entityAngularName %>ShellModule } from './<%= entityFileName %>-sh
     ]
     <%_ } _%>
 })
-export class <%= locals.microserviceName ? upperFirstCamelCase(locals.microserviceName) : '' %><%= entityAngularName %>Module {}
+export class <%= frontendAppName %><%= locals.microserviceName ? upperFirstCamelCase(locals.microserviceName) : '' %><%= entityAngularName %>Module {}
