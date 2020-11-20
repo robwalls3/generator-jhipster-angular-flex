@@ -51,7 +51,7 @@ module.exports = class extends EntityClientGenerator {
                 this.log(`Writing from ${this.CLIENT_TEST_SRC_DIR} and ${this.CLIENT_MAIN_SRC_DIR}`);
                 this.log('Creating cards and layouts for an entity...');
 
-                this.frontendAppName = _.upperFirst(this.jhipsterConfig.baseName).replace(/App$/, '');
+                this.frontendAppName = _.upperFirst(this.getAngularAppName()).replace(/App$/, '');
                 this.angularXAppName = this.frontendAppName;
 
                 this.writeFilesToDisk(mainFiles(`${this.CLIENT_MAIN_SRC_DIR}/app/`), this, false, mainTemplates);

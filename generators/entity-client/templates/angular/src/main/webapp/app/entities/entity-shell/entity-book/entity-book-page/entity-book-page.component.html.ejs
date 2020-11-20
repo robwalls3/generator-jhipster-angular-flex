@@ -100,8 +100,8 @@
                         No <%= relationshipFieldName %>
                     </div>
                             <%_ } else { _%>
-                    {{ <%= entityInstance + "." + relationshipFieldName + "?." + otherEntityField %> }}
-                    <div *ngIf="!<%= entityInstance + "." + relationshipFieldName + "?." + otherEntityField %>">
+                    {{ <%= entityInstance + "." + relationshipFieldName + otherEntityFieldCapitalized %> }}
+                    <div *ngIf="!<%= entityInstance + "." + relationshipFieldName + "Id" %>">
                         No <%= relationshipFieldName %>
                     </div>
                             <%_ } _%>
@@ -124,9 +124,9 @@
                     </span>
                         <%_ } else { _%>
                     <div *ngIf="<%= entityInstance + "." + relationshipFieldName %>">
-                        <a [routerLink]="['/<%= otherEntityStateName %>', <%= entityInstance + "." + relationshipFieldName + "?.id" %> %>, 'view']" >{{ <%= entityInstance + "." + relationshipFieldName + "?." + otherEntityField %> }}</a>
+                        <a [routerLink]="['/<%= otherEntityStateName %>', <%= entityInstance + "." + relationshipFieldName + "Id" %>, 'view']" >{{ <%= entityInstance + "." + relationshipFieldName + otherEntityFieldCapitalized %> }}</a>
                     </div>
-                    <span *ngIf="!<%= entityInstance %>.<%= relationshipFieldName %>">
+                    <span *ngIf="!<%= entityInstance %>.<%= relationshipFieldName + "Id" %>">
                         No <%= relationshipFieldName %>
                     </span>
                             <%_ } _%>

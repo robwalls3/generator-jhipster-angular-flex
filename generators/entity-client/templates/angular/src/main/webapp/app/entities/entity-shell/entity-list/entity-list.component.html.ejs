@@ -4,26 +4,24 @@
             <thead>
                 <tr>
                     <%_ for (idx in fields) { _%>
-                    <th scope="col"><span <%= jhiPrefix %>Translate="<%= fields[idx].fieldTranslationKey %>"><%= fields[idx].fieldNameHumanized %></span></th>
+                    <th scope="col"><span jhiTranslate="<%= `${i18nKeyPrefix}.${fields[idx].fieldName}` %>"><%= fields[idx].fieldNameHumanized %></span></th>
                     <%_ } _%>
                     <%_ for (idx in relationships) { _%>
                         <%_ if (relationships[idx].relationshipType === 'many-to-one'
                                 || (relationships[idx].relationshipType === 'one-to-one' && relationships[idx].ownerSide === true)
                                 || (relationships[idx].relationshipType === 'many-to-many' && relationships[idx].ownerSide === true && pagination === 'no')) {
-                            const fieldName = "." + relationships[idx].otherEntityField;
+                            const fieldName = dto === 'no' ? "." + relationships[idx].otherEntityField : relationships[idx].otherEntityFieldCapitalized;
                         _%>
-                    <th scope="col" <% if (pagination !== 'no') { %> <%= jhiPrefix %>SortBy="<%= relationships[idx].relationshipName + (fieldName) %>"<% } %>><span <%= jhiPrefix %>Translate="<%= `${i18nKeyPrefix}.${relationships[idx].relationshipName}` %>"><%= relationships[idx].relationshipNameHumanized %></span><% if (pagination !== 'no') { %> <fa-icon icon="sort"></fa-icon><% } %></th>
+                    <th scope="col"><span jhiTranslate="<%= `${i18nKeyPrefix}.${relationships[idx].relationshipName}` %>"><%= relationships[idx].relationshipNameHumanized %></span></th>
                         <%_ } _%>
                     <%_ } _%>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody<% if (pagination === 'infinite-scroll') { %> infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0"<% } %>>
-                <tr *ngFor="let <%= entityInstance %> of <%= entityInstancePlural %>; trackBy: trackId" data-cy="entityTable">
-                <%_
-                const keys = idFields.map(idField => `${entityInstance}.${idField.fieldName}`);
-                const routerLink = idFields.length === 0 ? '' : ` [routerLink]="['/${ entityUrl }', ${ keys.join(', ') }, 'view']"`;
-                for ([idx, field] of fields.entries()) {
+                <tr *ngFor="let <%= entityInstance %> of <%= entityInstancePlural %> ;trackBy: trackId">
+                    <td><a [routerLink]="['/<%= entityUrl %>', <%= entityInstance %>.id, 'view']">{{ <%= entityInstance %>.id }}</a></td>
+                <%_ for (idx in fields) {
                     const fieldName = fields[idx].fieldName;
                     const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
                     const fieldType = fields[idx].fieldType;
@@ -38,19 +36,17 @@
                     </td>
                     <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'any') { _%>
                     <td>
-                        <a *ngIf="<%= entityInstance %>.<%= fieldName %>" (click)="openFile(<%= entityInstance %>.<%= fieldName %>ContentType, <%= entityInstance %>.<%= fieldName %>)" <%= jhiPrefix %>Translate="entity.action.open">open</a>
+                        <a *ngIf="<%= entityInstance %>.<%= fieldName %>" (click)="openFile(<%= entityInstance %>.<%= fieldName %>ContentType, <%= entityInstance %>.<%= fieldName %>)" jhiTranslate="entity.action.open">open</a>
                         <span *ngIf="<%= entityInstance %>.<%= fieldName %>">{{ <%= entityInstance %>.<%= fieldName %>ContentType }}, {{ byteSize(<%= entityInstance %>.<%= fieldName %>) }}</span>
                     </td>
                     <%_ } else if (fields[idx].fieldIsEnum) { _%>
-                    <td<% if (field.id) { %>><a<%- routerLink %><% } %> <%= jhiPrefix %>Translate="{{ '<%= frontendAppName %>.<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %> }}">{{ <%= entityInstance %>.<%= fieldName %> }}<% if (field.id) { %></a><% } %></td>
+                    <td jhiTranslate="{{ '<%= angularAppName %>.<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %> }}">{{ <%= entityInstance %>.<%= fieldName %> }}</td>
                     <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
                     <td>{{ <%= entityInstance %>.<%= fieldName %> | date:'medium' }}</td>
                     <%_ } else if (fieldType === 'LocalDate') { _%>
                     <td>{{ <%= entityInstance %>.<%= fieldName %> | date:'mediumDate' }}</td>
-                    <%_ } else if (fieldType === 'Duration') { _%>
-                    <td title="{{ <%= entityInstance %>.<%= fieldName %> }}">{{ <%= entityInstance %>.<%= fieldName %> | duration }}</td>
                     <%_ } else { _%>
-                    <td<% if (field.id) { %>><a<%- routerLink %><% } %>>{{ <%= entityInstance %>.<%= fieldName %> }}<% if (field.id) { %></a><% } %></td>
+                    <td>{{ <%= entityInstance %>.<%= fieldName %> }}</td>
                     <%_ } _%>
                 <%_ } _%>
                 <%_ for (idx in relationships) {
@@ -74,7 +70,11 @@
                             {{ <%= relationshipFieldName %>.<%= otherEntityField %> }}{{ last ? '' : ', ' }}
                         </span>
                             <%_ } else { _%>
+                                <%_ if (dto === 'no') { _%>
                         {{ <%= entityInstance + "." + relationshipFieldName + "?." + otherEntityField %> }}
+                                <%_ } else { _%>
+                        {{ <%= entityInstance + "." + relationshipFieldName + otherEntityFieldCapitalized %> }}
+                                <%_ } _%>
                             <%_ } _%>
                         <%_ } else { _%>
                             <%_ if (relationshipType === 'many-to-many') { _%>
@@ -82,9 +82,15 @@
                             <a class="form-control-static" [routerLink]="['/<%= otherEntityStateName %>', <%= relationshipFieldName %>?.id, 'view']">{{ <%= relationshipFieldName %>.<%= otherEntityField %> }}</a>{{ last ? '' : ', ' }}
                         </span>
                             <%_ } else { _%>
+                                <%_ if (dto === 'no') { _%>
                         <div *ngIf="<%= entityInstance + "." + relationshipFieldName %>">
                             <a [routerLink]="['/<%= otherEntityStateName %>', <%= entityInstance + "." + relationshipFieldName + "?.id" %>, 'view']" >{{ <%= entityInstance + "." + relationshipFieldName + "?." + otherEntityField %> }}</a>
                         </div>
+                            <%_ } else { _%>
+                        <div *ngIf="<%= entityInstance + "." + relationshipFieldName + "Id" %>">
+                            <a [routerLink]="['/<%= otherEntityStateName %>', <%= entityInstance + "." + relationshipFieldName + "Id" %>, 'view']" >{{ <%= entityInstance + "." + relationshipFieldName + otherEntityFieldCapitalized %> }}</a>
+                        </div>
+                                <%_ } _%>
                             <%_ } _%>
                         <%_ } _%>
                     </td>
@@ -94,26 +100,23 @@
                         <div class="btn-group">
                             <button type="submit"
                                     [routerLink]="['/<%= entityUrl %>', <%= entityInstance %>.id, 'view']"
-                                    class="btn btn-info btn-sm"
-                                    data-cy="entityDetailsButton">
+                                    class="btn btn-info btn-sm">
                                 <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline" <%= jhiPrefix %>Translate="entity.action.view">View</span>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                             </button>
                             <%_ if (!readOnly) { _%>
 
                             <button type="submit"
                                     [routerLink]="['/<%= entityUrl %>', <%= entityInstance %>.id, 'edit']"
-                                    class="btn btn-primary btn-sm"
-                                    data-cy="entityEditButton">
+                                    class="btn btn-primary btn-sm">
                                 <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline" <%= jhiPrefix %>Translate="entity.action.edit">Edit</span>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                             </button>
 
                             <button type="submit" (click)="delete(<%= entityInstance %>)"
-                                    class="btn btn-danger btn-sm"
-                                    data-cy="entityDeleteButton">
+                                    class="btn btn-danger btn-sm">
                                 <fa-icon icon="times"></fa-icon>
-                                <span class="d-none d-md-inline" <%= jhiPrefix %>Translate="entity.action.delete">Delete</span>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                             </button>
                             <%_ } _%>
                         </div>

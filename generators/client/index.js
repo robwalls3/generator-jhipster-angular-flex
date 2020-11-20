@@ -109,7 +109,7 @@ module.exports = class extends ClientGenerator {
                 this.addNpmDependency('@angular/flex-layout', 'latest');
                 this.addNpmDependency('material-icons', 'latest');
 
-                this.angularAppName = this.getFrontendAppName();
+                this.angularAppName = this.getAngularAppName();
                 this.addAngularModule('', 'Material', 'material', 'material', false, this.ANGULAR);
             },
 

@@ -28,9 +28,9 @@ describe('Subgenerator entity-client of angular-flex JHipster blueprint', () => 
                 .withPrompts({
                     fieldAdd: false,
                     relationshipAdd: false,
-                    dto: 'no',
+                    dto: 'mapstruct',
                     service: 'no',
-                    pagination: 'infinite-scroll'
+                    pagination: 'pagination'
                 })
                 .on('end', done);
         });

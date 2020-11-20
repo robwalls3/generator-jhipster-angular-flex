@@ -18,6 +18,7 @@
 -%>
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { <%= entityInstance %>Route } from './<%= entityFileName %>.route';
 
 import { <%= frontendAppName %>SharedModule } from 'app/shared/shared.module';
 import { <%= entityAngularName %>Component } from './<%= entityFileName %>.component';
@@ -39,7 +40,7 @@ import {  <%= entityAngularName %>ShellModule } from './<%= entityFileName %>-sh
 @NgModule({
     imports: [
         <%= frontendAppName %>SharedModule,
-        RouterModule,
+        RouterModule.forChild(<%= entityInstance %>Route),
         MatToolbarModule,
         MatCardModule,
         MatIconModule,
