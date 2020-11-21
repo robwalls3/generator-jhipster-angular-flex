@@ -54,7 +54,7 @@
                     <span *ngIf="<%= entityInstance %>.<%= fieldName %>">{{ <%= entityInstance %>.<%= fieldName %>ContentType }}, {{ byteSize(<%= entityInstance %>.<%= fieldName %>) }}</span>
                 </div>
                 <%_ } else if (fields[idx].fieldIsEnum) { _%>
-                <div jhiTranslate="{{ '<%= frontendAppName %>.<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %> }}">{{ <%= entityInstance %>.<%= fieldName %> }}</div>
+                <div jhiTranslate="{{ '<%= angularAppName %>.<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %> }}">{{ <%= entityInstance %>.<%= fieldName %> }}</div>
                 <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
                 <div>{{ <%= entityInstance %>.<%= fieldName %> | date:'medium' }}</div>
                 <%_ } else if (fieldType === 'LocalDate') { _%>
