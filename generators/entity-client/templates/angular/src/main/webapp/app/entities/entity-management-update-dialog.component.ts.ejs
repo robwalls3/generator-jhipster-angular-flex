@@ -145,8 +145,8 @@ _%>
         <%_ if (fieldsContainBlob) { _%>
         protected dataUtils: JhiDataUtils,
         protected eventManager: JhiEventManager,
-        @Inject(MAT_DIALOG_DATA) public data: I<%= entityAngularName %>,
         <%_ } _%>
+        @Inject(MAT_DIALOG_DATA) public data: I<%= entityAngularName %>,
         protected <%= entityInstance %>Service: <%= entityAngularName %>Service,
 <%_
 Object.keys(differentRelationships).forEach(key => {
