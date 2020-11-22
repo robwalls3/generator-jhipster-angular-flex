@@ -27,6 +27,18 @@ function getMainFiles(ANGULAR_DIR) {
                         renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.component.ts`
                     },
                     {
+                        file: 'entities/entity-management-update-dialog.component.html',
+                        method: 'processHtml',
+                        template: true,
+                        renameTo: generator =>
+                            `entities/${generator.entityFolderName}/${generator.entityFileName}-update-dialog.component.html`
+                    },
+                    {
+                        file: 'entities/entity-management-update-dialog.component.ts',
+                        renameTo: generator =>
+                            `entities/${generator.entityFolderName}/${generator.entityFileName}-update-dialog.component.ts`
+                    },
+                    {
                         file: 'entities/entity-management.module.ts',
                         renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.module.ts`
                     },

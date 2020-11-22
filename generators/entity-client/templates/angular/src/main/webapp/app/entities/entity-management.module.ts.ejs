@@ -25,9 +25,11 @@ import { <%= entityAngularName %>Component } from './<%= entityFileName %>.compo
 import { <%= entityAngularName %>DetailComponent } from './<%= entityFileName %>-detail.component';
 <%_ if (!readOnly) { _%>
 import { <%= entityAngularName %>UpdateComponent } from './<%= entityFileName %>-update.component';
+import { <%= entityAngularName %>UpdateDialogComponent } from './<%= entityFileName %>-update-dialog.component';
 import { <%= entityAngularName %>DeleteDialogComponent } from './<%= entityFileName %>-delete-dialog.component';
 <%_ } _%>
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -48,6 +50,7 @@ import {  <%= entityAngularName %>ShellModule } from './<%= entityFileName %>-sh
         MatInputModule,
         MatFormFieldModule,
         MatSelectModule,
+        MatDialogModule,
         <%= entityAngularName %>ShellModule,
     ],
     declarations: [
@@ -55,17 +58,20 @@ import {  <%= entityAngularName %>ShellModule } from './<%= entityFileName %>-sh
         <%= entityAngularName %>DetailComponent,
         <%_ if (!readOnly) { _%>
         <%= entityAngularName %>UpdateComponent,
+        <%= entityAngularName %>UpdateDialogComponent,
         <%= entityAngularName %>DeleteDialogComponent,
         <%_ } %>
     ],
     exports: [
         <%_ if (!readOnly) { _%>
         <%= entityAngularName %>DeleteDialogComponent,
+        <%= entityAngularName %>UpdateDialogComponent,
         <%_ } %>
     ],
     <%_ if (!readOnly) { _%>
     entryComponents: [
-        <%= entityAngularName %>DeleteDialogComponent
+        <%= entityAngularName %>DeleteDialogComponent,
+        <%= entityAngularName %>UpdateDialogComponent,
     ]
     <%_ } _%>
 })
