@@ -259,11 +259,11 @@ _%>
     </div>
 
     <div mat-dialog-actions class="d-flex justify-content-end">
-        <button mat-button type="button" id="cancel-save">
+        <button mat-raised-button mat-dialog-close type="button">
             <fa-icon icon="ban"></fa-icon>&nbsp;<span <%= jhiPrefix %>Translate="entity.action.cancel">Cancel</span>
         </button>
 
-        <button mat-button color="accent" type="submit" id="save-entity" data-cy="entityCreateSaveButton" [disabled]="editForm.invalid || isSaving">
+        <button mat-raised-button color="accent" type="submit" [disabled]="editForm.invalid || isSaving">
             <fa-icon icon="save"></fa-icon>&nbsp;<span <%= jhiPrefix %>Translate="entity.action.save">Save</span>
         </button>
     </div>
