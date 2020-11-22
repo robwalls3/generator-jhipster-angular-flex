@@ -29,6 +29,7 @@ import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 <%_ if ( rxjsMapIsUsed ) { _%>
 import { map } from 'rxjs/operators';
@@ -144,6 +145,7 @@ _%>
         <%_ if (fieldsContainBlob) { _%>
         protected dataUtils: JhiDataUtils,
         protected eventManager: JhiEventManager,
+        @Inject(MAT_DIALOG_DATA) public data: I<%= entityAngularName %>,
         <%_ } _%>
         protected <%= entityInstance %>Service: <%= entityAngularName %>Service,
 <%_
@@ -317,7 +319,6 @@ _%>
 
     protected onSaveSuccess(): void {
         this.isSaving = false;
-        this.previousState();
     }
 
     protected onSaveError(): void {
